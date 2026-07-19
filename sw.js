@@ -1,79 +1,61 @@
-const CACHE_NAME = 'portfolio-v1'
-const urlsToCache = [
-  '/',
-  '/about',
-  '/projects',
-  '/contact',
-  '/src/assets/favicon.ico',
-  '/src/assets/images/hero.jpg',
-  '/src/assets/sakura.mp3'
-]
+const CACHE_NAME = 'portfolio-v2';
 
-// Install event - cache resources
+// Resolved inside the event handlers (not at parse time) since self.scope
+// reflects the registration scope, which works whether the site is served
+// from '/' (local) or a GitHub Pages repo subpath (prod).
+const PRECACHE_PATHS = ['', 'favicon.ico', 'manifest.json', 'hero.webp', 'Mayesh_Dani_Resume.pdf'];
+
 self.addEventListener('install', (event) => {
+  const scope = self.registration.scope;
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('Opened cache')
-        return cache.addAll(urlsToCache)
-      })
-  )
-})
+    caches.open(CACHE_NAME).then((cache) => {
+      const urls = PRECACHE_PATHS.map((path) => new URL(path, scope).href);
+      return cache.addAll(urls);
+    })
+  );
+  self.skipWaiting();
+});
 
-// Fetch event - serve from cache when offline
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request)
-      })
-  )
-})
-
-// Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Deleting old cache:', cacheName)
-            return caches.delete(cacheName)
-          }
-        })
+    caches.keys().then((cacheNames) =>
+      Promise.all(
+        cacheNames
+          .filter((name) => name !== CACHE_NAME)
+          .map((name) => caches.delete(name))
       )
+    )
+  );
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
+  if (request.method !== 'GET') return;
+
+  // This is a client-routed SPA - there's one real HTML document.
+  // Navigations to any route (e.g. /about) should try the network first,
+  // then fall back to the cached app shell so the app still boots offline.
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request).catch(() => caches.match(self.registration.scope))
+    );
+    return;
+  }
+
+  // Static assets: cache-first, then fetch from network and store the
+  // response for next time - this is what lets the hashed JS/CSS bundles
+  // (unknown at SW-authoring time) become available offline after a visit.
+  event.respondWith(
+    caches.match(request).then((cached) => {
+      if (cached) return cached;
+      return fetch(request).then((response) => {
+        if (response.ok) {
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, responseToCache));
+        }
+        return response;
+      });
     })
-  )
-})
-
-// Background sync for offline form submissions
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'background-sync') {
-    event.waitUntil(doBackgroundSync())
-  }
-})
-
-async function doBackgroundSync() {
-  try {
-    // Handle offline form submissions
-    const offlineData = await getOfflineData()
-    if (offlineData.length > 0) {
-      for (const data of offlineData) {
-        await sendOfflineData(data)
-      }
-    }
-  } catch (error) {
-    console.error('Background sync failed:', error)
-  }
-}
-
-async function getOfflineData() {
-  // Get stored offline data
-  return []
-}
-
-async function sendOfflineData(data) {
-  // Send stored data when back online
-  console.log('Sending offline data:', data)
-} 
+  );
+});

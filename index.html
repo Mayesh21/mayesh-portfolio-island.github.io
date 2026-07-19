@@ -5,12 +5,27 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="manifest" href="/mayesh-portfolio-island.github.io/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
+    <!-- Single Page Apps for GitHub Pages: restore the real path that -->
+    <!-- 404.html encoded into the query string before React Router mounts -->
+    <script type="text/javascript">
+      (function(l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&');
+          }).join('?');
+          window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location));
+    </script>
+
     <!-- Primary Meta Tags -->
     <title>Mayesh Dani | Interactive 3D Portfolio - Software Engineer</title>
     <meta name="title" content="Mayesh Dani | Interactive 3D Portfolio - Software Engineer" />
-    <meta name="description" content="Explore my interactive 3D portfolio showcasing web development projects, skills, and experience. Built with React, Three.js, and modern web technologies." />
-    <meta name="keywords" content="Mayesh Dani, Software Engineer, Web Developer, React, Three.js, Portfolio, 3D Portfolio, Frontend Developer, Full Stack Developer" />
+    <meta name="description" content="Explore my interactive 3D portfolio showcasing web development projects, AI systems, skills, and experience. Built with React, Three.js, and modern web technologies." />
+    <meta name="keywords" content="Mayesh Dani, Software Engineer, Web Developer, AI, Machine Learning, React, Three.js, Portfolio, 3D Portfolio, Frontend Developer, Full Stack Developer" />
     <meta name="author" content="Mayesh Dani" />
     <meta name="robots" content="index, follow" />
     
@@ -50,14 +65,18 @@
         "@type": "Organization",
         "name": "WisdmLabs"
       },
-      "description": "Software Engineer with expertise in web development, React, Three.js, and modern web technologies."
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "University of Galway"
+      },
+      "description": "Software Engineer with expertise in web development, React, Three.js, and modern web technologies, now pursuing an MSc in Artificial Intelligence at the University of Galway."
     }
     </script>
-    <script type="module" crossorigin src="/mayesh-portfolio-island.github.io/assets/index-D1BThjZ5.js"></script>
+    <script type="module" crossorigin src="/mayesh-portfolio-island.github.io/assets/index-DLZa-kZj.js"></script>
     <link rel="modulepreload" crossorigin href="/mayesh-portfolio-island.github.io/assets/three-DsFW5X-C.js">
     <link rel="modulepreload" crossorigin href="/mayesh-portfolio-island.github.io/assets/react-three-BkEgkn5H.js">
     <link rel="modulepreload" crossorigin href="/mayesh-portfolio-island.github.io/assets/react-router-DPGMeoxn.js">
-    <link rel="stylesheet" crossorigin href="/mayesh-portfolio-island.github.io/assets/index-Cc9Qor0K.css">
+    <link rel="stylesheet" crossorigin href="/mayesh-portfolio-island.github.io/assets/index-1wkZNvhz.css">
   </head>
   <body>
     <div id="root"></div>
