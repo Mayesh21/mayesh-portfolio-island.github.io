@@ -1,4 +1,8 @@
-const CACHE_NAME = 'portfolio-v2';
+// Bump this on every deploy that changes cached content or SW logic - it's
+// the only thing that forces browsers with an old SW/cache to actually
+// discard stale precached entries (e.g. an old manifest.json pointing at a
+// GH-Pages subpath that no longer applies) instead of serving them forever.
+const CACHE_NAME = 'portfolio-v3';
 
 // Resolved inside the event handlers (not at parse time) since self.scope
 // reflects the registration scope, which works whether the site is served
@@ -32,6 +36,11 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
+  // Only intercept same-origin http(s) requests. Browser extensions (ad
+  // blockers, coupon widgets, etc.) can inject content scripts that issue
+  // chrome-extension:// requests through the page's fetch pipeline - the
+  // Cache API throws on those schemes, so let the browser handle them normally.
+  if (!request.url.startsWith('http')) return;
 
   // This is a client-routed SPA - there's one real HTML document.
   // Navigations to any route (e.g. /about) should try the network first,

@@ -8,16 +8,19 @@ An interactive 3D portfolio built with React, Three.js, and Vite showcasing my s
 - **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 - **Smooth Animations**: Powered by React Spring for fluid interactions
 - **Contact Form**: Integrated with EmailJS for seamless communication
-- **Modern Tech Stack**: Built with React 18, Three.js, and Tailwind CSS
+- **Dark Mode**: Theme toggle with persisted preference
+- **Offline Support**: Service worker precaches the app shell for repeat visits
+- **Modern Tech Stack**: Built with React 19, Vite 8, Three.js, and Tailwind CSS 4
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React 18, Vite
+- **Frontend**: React 19, Vite 8
 - **3D Graphics**: Three.js, React Three Fiber, React Three Drei
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS 4
 - **Animations**: React Spring
 - **Email Service**: EmailJS
 - **Routing**: React Router DOM
+- **Testing**: Vitest, React Testing Library
 
 ## 📦 Installation
 
@@ -70,12 +73,15 @@ src/
 
 ## 🚀 Deployment
 
-### GitHub Pages
+### GitHub Pages (primary)
 1. Build the project:
    ```bash
    npm run build
    ```
 2. Deploy to GitHub Pages using the `dist` folder
+
+### Vercel (secondary)
+Connected via Git integration - pushes to `main` auto-deploy. `vercel.json` rewrites all routes to `index.html` for client-side routing, and `vite.config.js` detects Vercel's own `VERCEL` env var to serve assets from the domain root instead of the GitHub Pages subpath.
 
 ### Other Platforms
 Upload the contents of the `dist` folder to your hosting provider.
@@ -86,6 +92,8 @@ Upload the contents of the `dist` folder to your hosting provider.
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
+- `npm test` - Run the test suite (Vitest)
+- `npm run analyze` - Build and open a bundle-size report
 
 ## 🎨 3D Models
 
