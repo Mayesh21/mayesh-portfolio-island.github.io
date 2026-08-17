@@ -42,7 +42,7 @@ const Alert = ( { type, text, onClose } ) => {
             <p className='font-semibold text-left text-sm sm:text-base'>{text}</p>
             <button
               onClick={handleClose}
-              className='ml-2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/20 transition-colors flex-shrink-0'
+              className='ml-2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/20 transition-colors shrink-0'
               aria-label='Close alert'
             >
               <svg className='w-3.5 h-3.5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>

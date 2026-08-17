@@ -1,8 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --color-gray-200: #D5DAE1;
+  --color-black: #000;
+  --color-black-500: #1D2235;
+  --color-blue-500: #2b77e7;
+
+  --font-worksans: "Work Sans", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+
+  --shadow-card: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+}
 
 :root {
   --blue-rgb: 237 245 255;
@@ -764,7 +773,7 @@ body:has(.card[data-color="green"]:hover) {
   }
 
   .btn {
-    @apply text-white bg-gradient-to-r from-[#00c6ff] to-[#0072ff] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center;
+    @apply text-white bg-gradient-to-r from-[#00c6ff] to-[#0072ff] focus:ring-4 focus:outline-hidden focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center;
   }
 
   .header {
@@ -788,7 +797,11 @@ body:has(.card[data-color="green"]:hover) {
   }
 
   .nav-links {
-    @apply flex text-base sm:text-lg gap-3 sm:gap-7 font-medium glassmorphism px-3 sm:px-6 py-2 sm:py-3 rounded-xl relative;
+    @apply flex text-base sm:text-lg gap-3 sm:gap-7 font-medium px-3 sm:px-6 py-2 sm:py-3 rounded-xl relative;
+    background: rgba(8, 116, 239, 0.07);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
   }
 
   .nav-slider {
@@ -829,7 +842,12 @@ body:has(.card[data-color="green"]:hover) {
   }
 
   .info-box {
-    @apply mx-5 relative flex text-white flex-col gap-3 max-w-2xl neo-brutalism-blue pt-4 pb-12 px-8;
+    @apply mx-5 relative flex text-white flex-col gap-3 max-w-2xl pt-4 pb-12 px-8;
+    background: #2b77e7;
+    border-radius: 10px;
+    border: #2b77e7;
+    box-shadow: 0.6vmin 0.6vmin #336cc1, 1vmin 1vmin #0092db, 1vmin 1vmin #0092db,
+      0.65vmin 1vmin #0092db, 1vmin 0.65vmin #0092db;
   }
 
   /* Mobile-specific info-box adjustments */
@@ -982,11 +1000,15 @@ body:has(.card[data-color="green"]:hover) {
 }
 
 /* Neon Timeline Styling — lightsaber gradient cycling bottom-to-top */
-/* Double class selector to beat the library's specificity */
+/* Double class selector to beat the library's specificity. Line position
+   defaults to the library's own single-column offset (left: 18px) and only
+   shifts to center at 1170px+, matching exactly where the library itself
+   switches card layout to two columns - keeping line and cards in sync at
+   every width instead of the line jumping to center before the cards do. */
 .vertical-timeline.vertical-timeline::before {
   content: '';
   position: absolute;
-  left: 50%;
+  left: 18px;
   top: 0;
   bottom: 0;
   width: 4px;
@@ -1002,13 +1024,19 @@ body:has(.card[data-color="green"]:hover) {
   );
   background-size: 100% 300%;
   animation: lightsaberFlow 4s linear infinite;
-  transform: translateX(-50%);
   border-radius: 2px;
   box-shadow:
     0 0 8px rgba(59, 130, 246, 0.5),
     0 0 16px rgba(139, 92, 246, 0.3),
     0 0 24px rgba(236, 72, 153, 0.15);
   z-index: 0;
+}
+
+@media (min-width: 1170px) {
+  .vertical-timeline.vertical-timeline::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes lightsaberFlow {
@@ -1086,8 +1114,10 @@ body:has(.card[data-color="green"]:hover) {
     width: calc(100% - 60px);
   }
   
-  /* Ensure icons are visible above cards */
-  .vertical-timeline-element-icon img {
+  /* Ensure icons are visible above cards - skip full-bleed (object-cover)
+     icons like WisdmLabs, which are meant to fill the circle edge-to-edge
+     same as on wide screens, not shrink and reveal their square corners. */
+  .vertical-timeline-element-icon img:not(.object-cover) {
     width: 60%;
     height: 60%;
     object-fit: contain;

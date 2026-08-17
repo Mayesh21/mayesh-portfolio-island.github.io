@@ -199,7 +199,7 @@ const About = () => {
                         >
                           {experience.company_name}
                         </a>
-                        <span className={`px-3 py-1 text-xs rounded-full font-bold shadow-sm ${
+                        <span className={`px-3 py-1 text-xs rounded-full font-bold shadow-xs ${
                           experience.role === 'Full-time' 
                             ? isDark 
                               ? 'bg-green-900 text-green-200' 
@@ -287,7 +287,7 @@ const About = () => {
                       {experience.technologies.map((tech, index) => (
                         <span
                           key={index}
-                          className={`px-3 py-1 text-xs rounded-full font-medium shadow-sm border transition-colors duration-200 ${
+                          className={`px-3 py-1 text-xs rounded-full font-medium shadow-xs border transition-colors duration-200 ${
                             isDark 
                               ? 'bg-gray-700 text-blue-300 border-blue-600 hover:bg-blue-900/20' 
                               : 'bg-white text-blue-700 border-blue-200 hover:bg-blue-50'
@@ -323,7 +323,7 @@ const About = () => {
                             isDark ? 'text-gray-300' : 'text-gray-700'
                           }`}
                         >
-                          <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="w-2 h-2 bg-green-500 rounded-full mt-2 shrink-0"></div>
                           <span>{achievement}</span>
                         </li>
                       ))}
@@ -354,7 +354,7 @@ const About = () => {
                             isDark ? 'text-gray-300' : 'text-gray-700'
                           }`}
                         >
-                          <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                          <div className={`w-2 h-2 rounded-full mt-2 shrink-0 ${
                             isDark ? 'bg-gray-500' : 'bg-gray-400'
                           }`}></div>
                           <span>{point}</span>
@@ -381,7 +381,7 @@ const About = () => {
                 }`}
               >
                 <div className="flex items-start gap-4">
-                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ${
                     isDark ? 'bg-blue-900/50' : 'bg-blue-100'
                   }`}>
                     <svg className={`w-6 h-6 ${isDark ? 'text-blue-300' : 'text-blue-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">

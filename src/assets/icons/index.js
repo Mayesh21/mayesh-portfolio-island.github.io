@@ -28,6 +28,7 @@ import car from './car.svg'
 import arrow from './arrow.svg'
 import contact from './contact.svg'
 import wisdmlabsIcon from './wisdmlabsIcon.png'
+import universityOfGalway from './universityOfGalway.jpeg'
 import soundon from './soundon.png'
 import soundoff from './soundoff.png'
 import csharp from './csharp.svg'
@@ -79,6 +80,7 @@ export {
     arrow,
     contact,
     wisdmlabsIcon,
+    universityOfGalway,
     soundon,
     soundoff,
     csharp,

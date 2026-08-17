@@ -22,7 +22,7 @@ const SkillModal = ({ skill, isOpen, onClose }) => {
 
   return createPortal(
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -54,7 +54,7 @@ const SkillModal = ({ skill, isOpen, onClose }) => {
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors focus:outline-hidden focus:ring-2 focus:ring-blue-500"
             aria-label="Close skill details"
           >
             <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,7 +119,7 @@ const SkillModal = ({ skill, isOpen, onClose }) => {
         <div className="mt-6">
           <button
             onClick={onClose}
-            className="w-full py-3 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="w-full py-3 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             Close
           </button>

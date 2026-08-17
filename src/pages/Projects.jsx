@@ -265,7 +265,7 @@ const Projects = () => {
               <div
                 key={project.id}
                 onClick={() => handleProjectClick(project)}
-                className={`project-card recently-viewed-card flex-shrink-0 w-80 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:scale-105 hover:-translate-y-1 ${
+                className={`project-card recently-viewed-card shrink-0 w-80 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:scale-105 hover:-translate-y-1 ${
                   isDark 
                     ? 'bg-gray-800 border border-gray-700' 
                     : 'bg-white border border-gray-100'
@@ -397,7 +397,7 @@ const Projects = () => {
                     {selectedCategories.length > 0 && (
                       <button
                         onClick={clearCategoryFilters}
-                        className={`w-full text-left px-2 py-1 text-sm rounded ${
+                        className={`w-full text-left px-2 py-1 text-sm rounded-sm ${
                           isDark 
                             ? 'text-blue-400 hover:bg-blue-900/20' 
                             : 'text-blue-600 hover:bg-blue-50'
@@ -407,7 +407,7 @@ const Projects = () => {
                       </button>
                     )}
                     {categories.map(category => (
-                      <label key={category} className={`flex items-center px-2 py-1 rounded cursor-pointer ${
+                      <label key={category} className={`flex items-center px-2 py-1 rounded-sm cursor-pointer ${
                         isDark 
                           ? 'hover:bg-gray-700' 
                           : 'hover:bg-gray-50'
@@ -416,7 +416,7 @@ const Projects = () => {
                           type="checkbox"
                           checked={selectedCategories.includes(category)}
                           onChange={() => toggleCategory(category)}
-                          className={`mr-2 rounded text-blue-600 focus:ring-blue-500 ${
+                          className={`mr-2 rounded-sm text-blue-600 focus:ring-blue-500 ${
                             isDark ? 'border-gray-600' : 'border-gray-300'
                           }`}
                         />
@@ -477,7 +477,7 @@ const Projects = () => {
                     {selectedTechnologies.length > 0 && (
                       <button
                         onClick={clearTechnologyFilters}
-                        className={`w-full text-left px-2 py-1 text-sm rounded ${
+                        className={`w-full text-left px-2 py-1 text-sm rounded-sm ${
                           isDark 
                             ? 'text-blue-400 hover:bg-blue-900/20' 
                             : 'text-blue-600 hover:bg-blue-50'
@@ -487,7 +487,7 @@ const Projects = () => {
                       </button>
                     )}
                     {technologies.map(technology => (
-                      <label key={technology} className={`flex items-center px-2 py-1 rounded cursor-pointer ${
+                      <label key={technology} className={`flex items-center px-2 py-1 rounded-sm cursor-pointer ${
                         isDark 
                           ? 'hover:bg-gray-700' 
                           : 'hover:bg-gray-50'
@@ -496,7 +496,7 @@ const Projects = () => {
                           type="checkbox"
                           checked={selectedTechnologies.includes(technology)}
                           onChange={() => toggleTechnology(technology)}
-                          className={`mr-2 rounded text-blue-600 focus:ring-blue-500 ${
+                          className={`mr-2 rounded-sm text-blue-600 focus:ring-blue-500 ${
                             isDark ? 'border-gray-600' : 'border-gray-300'
                           }`}
                         />
@@ -556,7 +556,7 @@ const Projects = () => {
                         setSortBy(option.value);
                         setShowSortDropdown(false);
                       }}
-                      className={`w-full text-left px-2 py-1 text-sm rounded ${
+                      className={`w-full text-left px-2 py-1 text-sm rounded-sm ${
                         sortBy === option.value
                           ? 'bg-blue-500 text-white'
                           : isDark 

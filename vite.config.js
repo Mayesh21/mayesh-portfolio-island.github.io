@@ -1,11 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    tailwindcss(),
     visualizer({
       filename: './dist/bundle-report.html',
       open: false,
@@ -25,13 +27,21 @@ export default defineConfig({
     chunkSizeWarningLimit: 700,
     rollupOptions: {
       output: {
-        manualChunks: {
+        manualChunks(id) {
+          // Windows module ids use backslashes - normalize before matching
+          const normalized = id.replace(/\\/g, '/')
           // Split Three.js into its own chunk (~600KB) - loaded only when 3D scenes need it
-          three: ['three'],
+          if (normalized.includes('/node_modules/three/')) return 'three'
           // Split React Three ecosystem (includes react-spring to avoid useLayoutEffect resolution issues)
-          'react-three': ['@react-three/fiber', '@react-three/drei', '@react-spring/three'],
+          if (
+            normalized.includes('/node_modules/@react-three/fiber') ||
+            normalized.includes('/node_modules/@react-three/drei') ||
+            normalized.includes('/node_modules/@react-spring/three')
+          ) {
+            return 'react-three'
+          }
           // Split React Router
-          'react-router': ['react-router-dom'],
+          if (normalized.includes('/node_modules/react-router-dom')) return 'react-router'
         },
       },
     },
