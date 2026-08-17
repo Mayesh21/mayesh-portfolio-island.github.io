@@ -54,6 +54,21 @@ import ysiInet3 from '../assets/images/projects/ysi-inet-3.jpg';
 import minprep1 from '../assets/images/projects/12minprep-1.jpg';
 import minprep2 from '../assets/images/projects/12minprep-2.jpg';
 import minprep3 from '../assets/images/projects/12minprep-3.jpg';
+import filex1 from '../assets/images/projects/filex-1.jpg';
+import filex2 from '../assets/images/projects/filex-2.jpg';
+import filex3 from '../assets/images/projects/filex-3.jpg';
+import filex4 from '../assets/images/projects/filex-4.jpg';
+import filex5 from '../assets/images/projects/filex-5.jpg';
+import filex6 from '../assets/images/projects/filex-6.jpg';
+import library1 from '../assets/images/projects/library-1.png';
+import library2 from '../assets/images/projects/library-2.png';
+import library3 from '../assets/images/projects/library-3.png';
+import library4 from '../assets/images/projects/library-4.png';
+import library5 from '../assets/images/projects/library-5.png';
+import physipal1 from '../assets/images/projects/physipal-1.png';
+import physipal2 from '../assets/images/projects/physipal-2.png';
+import physipal3 from '../assets/images/projects/physipal-3.png';
+import physipal4 from '../assets/images/projects/physipal-4.png';
 
 // These icons are pure white silhouettes designed to sit directly on a
 // colored gradient background - wrapping them in the light icon-chip (used
@@ -509,7 +524,7 @@ export const projects = [
         timeSpent: '2 months',
         githubUrl: 'https://github.com/Mayesh21/LiberaryManagementSystem',
         liveUrl: null,
-        screenshots: [],
+        screenshots: [library1, library2, library3, library4, library5],
         features: ['Book Management', 'User Registration', 'Checkout System', 'Admin Dashboard', 'Search Functionality'],
         challenges: ['Database design', 'Session management', 'Security implementation'],
         learnings: ['JSP Development', 'Database Design', 'Web Security', 'User Authentication'],
@@ -531,7 +546,7 @@ export const projects = [
         timeSpent: '2 months',
         githubUrl: 'https://github.com/Mayesh21/FileX',
         liveUrl: null,
-        screenshots: [],
+        screenshots: [filex1, filex2, filex3, filex4, filex5, filex6],
         features: ['File Browsing', 'Search & Sort', 'File Operations', 'Cloud Storage', 'User Interface'],
         challenges: ['File permissions', 'Performance optimization', 'UI/UX design'],
         learnings: ['Android Development', 'File System APIs', 'Mobile UI Design', 'Database Integration'],
@@ -575,7 +590,7 @@ export const projects = [
         timeSpent: '3 months',
         githubUrl: 'https://github.com/Mayesh21/Physipal',
         liveUrl: null,
-        screenshots: [],
+        screenshots: [physipal1, physipal2, physipal3, physipal4],
         features: ['Product Catalog', 'Shopping Cart', 'Order Management', 'Admin Panel', 'Payment Integration'],
         challenges: ['E-commerce logic', 'Security compliance', 'Inventory management'],
         learnings: ['PHP Development', 'E-commerce Systems', 'Payment Processing', 'Database Design'],

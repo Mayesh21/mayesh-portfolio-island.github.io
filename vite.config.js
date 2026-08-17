@@ -14,7 +14,13 @@ export default defineConfig({
     })
   ],
   assetsInclude: ['**/*.glb'],
-  base: process.env.NODE_ENV === 'production' ? '/mayesh-portfolio-island.github.io/' : '/',
+  // GitHub Pages serves this app from a /<repo-name>/ subpath, so production
+  // builds need that baked into every asset URL. Vercel serves from the
+  // domain root instead - VERCEL is auto-set in Vercel's build environment,
+  // so use it to skip the GH Pages subpath there (it would 404 everything).
+  base: process.env.VERCEL
+    ? '/'
+    : process.env.NODE_ENV === 'production' ? '/mayesh-portfolio-island.github.io/' : '/',
   build: {
     chunkSizeWarningLimit: 700,
     rollupOptions: {

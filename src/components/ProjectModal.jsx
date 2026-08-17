@@ -27,19 +27,30 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
 
   if (!isOpen || !project) return null;
 
+  // Mobile app screenshots are portrait - showing one at a time inside a
+  // landscape frame wastes most of the frame as empty space, so pair them
+  // two-up instead. Everything else stays a single image per slide.
+  const isMobileGallery = project.category === 'Mobile Application';
+  const screenshotStep = isMobileGallery ? 2 : 1;
+  const screenshotCount = project.screenshots ? project.screenshots.length : 0;
+  const slideCount = Math.ceil(screenshotCount / screenshotStep);
+  const currentSlide = Math.floor(currentScreenshotIndex / screenshotStep);
+
   const nextScreenshot = () => {
-    if (project.screenshots && project.screenshots.length > 0) {
-      setCurrentScreenshotIndex((prev) => 
-        prev === project.screenshots.length - 1 ? 0 : prev + 1
-      );
+    if (screenshotCount > 0) {
+      setCurrentScreenshotIndex((prev) => {
+        const next = prev + screenshotStep;
+        return next >= screenshotCount ? 0 : next;
+      });
     }
   };
 
   const prevScreenshot = () => {
-    if (project.screenshots && project.screenshots.length > 0) {
-      setCurrentScreenshotIndex((prev) => 
-        prev === 0 ? project.screenshots.length - 1 : prev - 1
-      );
+    if (screenshotCount > 0) {
+      setCurrentScreenshotIndex((prev) => {
+        const next = prev - screenshotStep;
+        return next < 0 ? (slideCount - 1) * screenshotStep : next;
+      });
     }
   };
 
@@ -103,26 +114,45 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               <div className="bg-gray-50 rounded-lg p-4">
                 <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4">Project Screenshots</h3>
                 <div className="relative">
-                  <div className="aspect-video bg-white rounded-lg overflow-hidden shadow-lg">
-                    <img
-                      src={project.screenshots[currentScreenshotIndex]}
-                      alt={`${project.name} screenshot ${currentScreenshotIndex + 1}`}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
-                      }}
-                    />
-                    <div className="hidden w-full h-full items-center justify-center bg-gray-100 text-gray-500">
-                      <div className="text-center">
-                        <div className="text-4xl mb-2">📸</div>
-                        <p className="text-sm">Screenshot {currentScreenshotIndex + 1}</p>
+                  {isMobileGallery ? (
+                    <div className="flex gap-3 justify-center">
+                      {[currentScreenshotIndex, currentScreenshotIndex + 1]
+                        .filter((idx) => idx < screenshotCount)
+                        .map((idx) => (
+                          <div key={idx} className="aspect-[9/16] max-h-[70vh] bg-white rounded-lg overflow-hidden shadow-lg">
+                            <img
+                              src={project.screenshots[idx]}
+                              alt={`${project.name} screenshot ${idx + 1}`}
+                              className="w-full h-full object-contain"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                              }}
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  ) : (
+                    <div className="aspect-video bg-white rounded-lg overflow-hidden shadow-lg">
+                      <img
+                        src={project.screenshots[currentScreenshotIndex]}
+                        alt={`${project.name} screenshot ${currentScreenshotIndex + 1}`}
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
+                      />
+                      <div className="hidden w-full h-full items-center justify-center bg-gray-100 text-gray-500">
+                        <div className="text-center">
+                          <div className="text-4xl mb-2">📸</div>
+                          <p className="text-sm">Screenshot {currentScreenshotIndex + 1}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                   
                   {/* Navigation Arrows */}
-                  {project.screenshots.length > 1 && (
+                  {slideCount > 1 && (
                     <>
                       <button
                         onClick={prevScreenshot}
@@ -146,16 +176,16 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                   )}
                   
                   {/* Screenshot Indicators */}
-                  {project.screenshots.length > 1 && (
+                  {slideCount > 1 && (
                     <div className="flex justify-center gap-2 mt-4">
-                      {project.screenshots.map((_, index) => (
+                      {Array.from({ length: slideCount }, (_, slide) => (
                         <button
-                          key={index}
-                          onClick={() => setCurrentScreenshotIndex(index)}
+                          key={slide}
+                          onClick={() => setCurrentScreenshotIndex(slide * screenshotStep)}
                           className={`w-2 h-2 rounded-full transition-all ${
-                            index === currentScreenshotIndex ? 'bg-blue-500' : 'bg-gray-300'
+                            slide === currentSlide ? 'bg-blue-500' : 'bg-gray-300'
                           }`}
-                          aria-label={`Go to screenshot ${index + 1}`}
+                          aria-label={`Go to screenshot ${slide + 1}`}
                         />
                       ))}
                     </div>
