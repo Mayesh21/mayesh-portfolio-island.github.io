@@ -1,16 +1,18 @@
-# Mayesh Dani - 3D Portfolio
+# Mayesh Dani — 3D Portfolio
 
-An interactive 3D portfolio built with React, Three.js, and Vite showcasing my skills, projects, and experience in web development.
+My personal interactive 3D portfolio — built with React, Three.js, and Vite to showcase my skills, projects, and experience as a software engineer. Explore an immersive 3D island, browse my work, and get in touch.
 
-## 🚀 Features
+**Live:** https://mayesh-dani.vercel.app/
+
+## ✨ Features
 
 - **Interactive 3D Environment**: Explore an immersive island with rotating 3D models
 - **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 - **Smooth Animations**: Powered by React Spring for fluid interactions
-- **Contact Form**: Integrated with EmailJS for seamless communication
+- **Contact Form**: Integrated with EmailJS
 - **Dark Mode**: Theme toggle with persisted preference
 - **Offline Support**: Service worker precaches the app shell for repeat visits
-- **Modern Tech Stack**: Built with React 19, Vite 8, Three.js, and Tailwind CSS 4
+- **Modern Tech Stack**: React 19, Vite 8, Three.js, and Tailwind CSS 4
 
 ## 🛠️ Tech Stack
 
@@ -22,40 +24,12 @@ An interactive 3D portfolio built with React, Three.js, and Vite showcasing my s
 - **Routing**: React Router DOM
 - **Testing**: Vitest, React Testing Library
 
-## 📦 Installation
+## 🎮 Sections
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Mayesh21/mayesh-portfolio-island.github.io.git
-   cd mayesh-portfolio-island.github.io
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-   Create a `.env.local` file in the root directory:
-   ```env
-   VITE_APP_EMAILJS_SERVICE_ID=your_service_id
-   VITE_APP_EMAILJS_TEMPLATE_ID=your_template_id
-   VITE_APP_EMAILJS_PUBLIC_KEY=your_public_key
-   ```
-
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-
-   The application will be available at `http://localhost:5173`
-
-## 🎮 Usage
-
-- **Navigate**: Use the navigation bar to explore different sections
-- **3D Interaction**: Click and drag to rotate the island, or use arrow keys
-- **Contact**: Fill out the contact form to get in touch
-- **Audio**: Toggle background music with the sound button
+- **Home**: Interactive 3D island — click and drag to rotate, or use arrow keys
+- **About**: My skills, work experience, and background
+- **Projects**: Selected work with screenshots and links
+- **Contact**: Reach me via the form (animated fox scene)
 
 ## 📁 Project Structure
 
@@ -71,61 +45,48 @@ src/
 └── styles/             # Global styles
 ```
 
+## 💻 Local Development
+
+For working on the site locally. Requires an `.env.local` with my EmailJS keys:
+
+```env
+VITE_APP_EMAILJS_SERVICE_ID=...
+VITE_APP_EMAILJS_TEMPLATE_ID=...
+VITE_APP_EMAILJS_PUBLIC_KEY=...
+```
+
+Scripts:
+
+- `npm run dev` — Start development server (`http://localhost:5173`)
+- `npm run build` — Build for production
+- `npm run preview` — Preview production build
+- `npm run lint` — Run ESLint
+- `npm test` — Run the test suite (Vitest)
+- `npm run analyze` — Build and open a bundle-size report
+
 ## 🚀 Deployment
 
-### GitHub Pages (primary)
-1. Build the project:
-   ```bash
-   npm run build
-   ```
-2. Deploy to GitHub Pages using the `dist` folder
-
-### Vercel (secondary)
-Connected via Git integration - pushes to `main` auto-deploy. `vercel.json` rewrites all routes to `index.html` for client-side routing, and `vite.config.js` detects Vercel's own `VERCEL` env var to serve assets from the domain root instead of the GitHub Pages subpath.
-
-### Other Platforms
-Upload the contents of the `dist` folder to your hosting provider.
-
-## 🔧 Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-- `npm test` - Run the test suite (Vitest)
-- `npm run analyze` - Build and open a bundle-size report
+Deployed on **Vercel** — connected via Git integration, pushes to `main` auto-deploy. `vercel.json` rewrites all routes to `index.html` for client-side routing.
 
 ## 🎨 3D Models
 
-The portfolio uses custom 3D models:
 - **Island**: Main interactive environment
 - **Sky**: Dynamic background
 - **Bird**: Animated flying element
 - **Plane**: Flying aircraft
-- **Fox**: Interactive character in contact section
+- **Fox**: Interactive character in the contact section
 
-## 📦 Bundle Analysis & Optimization
+## 🙏 Credits & Reference
 
-- Run `npm run analyze` to generate a visual bundle report (`dist/bundle-report.html`).
-- Use the report to identify large dependencies and optimize your bundle (e.g., code splitting, removing unused packages).
+Built by following JS Mastery's tutorial — [Build and Deploy an Amazing 3D Web Developer Portfolio](https://www.youtube.com/watch?v=FkowOdMjvYo). The base 3D models — **island, plane, and fox** — come from that tutorial (originally sourced from Sketchfab; see the video description for the original model authors and licenses).
 
-## 🖼️ Image Optimization
+If you want to build a similar 3D portfolio, that video is a great starting point.
 
-- Convert all `.jpg`/`.png` images in `src/assets/images/` to `.webp` using [Squoosh](https://squoosh.app/) or [imagemin](https://github.com/imagemin/imagemin).
-- Use the `OptimizedImage` component for all image rendering in React components.
-- For large images, provide multiple resolutions and use the `sizes` prop for responsive loading.
-- Keep image file sizes as small as possible for fast loading and better Core Web Vitals.
+## 📄 Ownership
 
-## 🤝 Contributing
+© Mayesh Dani.
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License.
+This is my personal portfolio. My content — project write-ups, screenshots, copy, skills/experience data, and site customizations — is mine; please don't republish it as your own. The base 3D models (island, plane, fox) belong to their original authors (see Credits). To build your own, follow the tutorial above rather than cloning this repo.
 
 ## 📞 Contact
 

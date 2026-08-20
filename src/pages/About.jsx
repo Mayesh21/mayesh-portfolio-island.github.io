@@ -145,7 +145,7 @@ const About = () => {
         </RevealOnScroll>
         <div className="mt-5 flex flex-col gap-3 text-slate-500">
           <p>
-          Over two years at WisdmLabs, I&apos;ve collaborated with clients to architect and deliver scalable web platforms, built AI-powered systems, and optimized enterprise applications. Here&apos;s my journey:
+          Over two-plus years at WisdmLabs, I collaborated with clients to architect and deliver scalable web platforms, built AI-powered systems, and optimized enterprise applications. Here&apos;s my journey:
           </p>
         </div>
         <div className="mt-12 flex">

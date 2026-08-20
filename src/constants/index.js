@@ -70,6 +70,10 @@ import physipal1 from '../assets/images/projects/physipal-1.png';
 import physipal2 from '../assets/images/projects/physipal-2.png';
 import physipal3 from '../assets/images/projects/physipal-3.png';
 import physipal4 from '../assets/images/projects/physipal-4.png';
+import expense1 from '../assets/images/projects/expense-1.png';
+import expense2 from '../assets/images/projects/expense-2.png';
+import expense3 from '../assets/images/projects/expense-3.png';
+import expense4 from '../assets/images/projects/expense-4.png';
 
 // These icons are pure white silhouettes designed to sit directly on a
 // colored gradient background - wrapping them in the light icon-chip (used
@@ -460,7 +464,7 @@ export const projects = [
         timeSpent: '3 months',
         githubUrl: 'https://github.com/Mayesh21/ExpenseManagementSystem',
         liveUrl: null,
-        screenshots: [],
+        screenshots: [expense1, expense2, expense3, expense4],
         features: ['User Authentication', 'Expense Tracking', 'Data Visualization', 'Category Management', 'Monthly Reports'],
         challenges: ['Real-time data updates', 'Complex state management', 'Data visualization'],
         learnings: ['MERN Stack Development', 'State Management', 'Chart.js Integration', 'MongoDB Aggregation'],
