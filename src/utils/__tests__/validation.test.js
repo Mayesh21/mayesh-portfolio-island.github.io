@@ -55,9 +55,9 @@ describe('Validation Functions', () => {
   })
 
   describe('sanitizeInput', () => {
-    it('should remove HTML tags and trim whitespace', () => {
-      expect(sanitizeInput('<script>alert("xss")</script>')).toBe('scriptalert("xss")/script')
-      expect(sanitizeInput('  <p>Hello</p>  ')).toBe('pHello/p')
+    it('should encode HTML entities and trim whitespace', () => {
+      expect(sanitizeInput('<script>alert("xss")</script>')).toBe('&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;')
+      expect(sanitizeInput('  <p>Hello</p>  ')).toBe('&lt;p&gt;Hello&lt;/p&gt;')
       expect(sanitizeInput('Normal text')).toBe('Normal text')
     })
 

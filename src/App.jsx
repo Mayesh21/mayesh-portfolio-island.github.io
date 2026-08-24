@@ -23,15 +23,17 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const App = () => {
   useMouseGlow();
   return (
-    <main className='bg-slate-300/20 h-full'>
+    <div className='bg-slate-300/20 h-full'>
         <Router basename={config.basename}>
             <ThemeProvider>
                 <ErrorBoundary>
+                    <a href="#main-content" className="skip-link">Skip to content</a>
                     <ScrollProgress />
                     <NavBar />
                     <OfflineIndicator />
                     <ScrollToTop />
                     <ScrollReset />
+                    <main id="main-content" tabIndex={-1}>
                     <PageTransition>
                         <Routes>
                             <Route path='/' element={<Home />} />
@@ -57,11 +59,12 @@ const App = () => {
                             } />
                         </Routes>
                     </PageTransition>
+                    </main>
                     <Footer />
                 </ErrorBoundary>
             </ThemeProvider>
         </Router>
-    </main>
+    </div>
   )
 }
 

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://mayesh21.github.io/mayesh-portfolio-island.github.io",
+  "homepage": "https://mayesh-dani.vercel.app",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

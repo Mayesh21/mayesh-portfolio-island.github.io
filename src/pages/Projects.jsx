@@ -871,7 +871,9 @@ const Projects = () => {
       {/* No Results */}
       {filteredProjects.length === 0 && (
         <div className="text-center py-12">
-          <div className="text-gray-400 text-6xl mb-4">🔍</div>
+          <svg className="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
           <h3 className="text-xl font-semibold text-gray-900 mb-2">No projects found</h3>
           <p className="text-gray-600">
             Try adjusting your search terms or filters to find what you&apos;re looking for.

@@ -6,21 +6,6 @@
     <link rel="manifest" href="/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Single Page Apps for GitHub Pages: restore the real path that -->
-    <!-- 404.html encoded into the query string before React Router mounts -->
-    <script type="text/javascript">
-      (function(l) {
-        if (l.search[1] === '/') {
-          var decoded = l.search.slice(1).split('&').map(function(s) {
-            return s.replace(/~and~/g, '&');
-          }).join('?');
-          window.history.replaceState(null, null,
-            l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location));
-    </script>
-
     <!-- Primary Meta Tags -->
     <title>Mayesh Dani | Interactive 3D Portfolio - Software Engineer</title>
     <meta name="title" content="Mayesh Dani | Interactive 3D Portfolio - Software Engineer" />
@@ -34,7 +19,7 @@
     <meta property="og:url" content="https://mayesh-dani.vercel.app/" />
     <meta property="og:title" content="Mayesh Dani | Interactive 3D Portfolio - Software Engineer" />
     <meta property="og:description" content="Explore my interactive 3D portfolio showcasing web development projects, skills, and experience." />
-    <meta property="og:image" content="hero.webp" />
+    <meta property="og:image" content="https://mayesh-dani.vercel.app/hero.webp" />
     <meta property="og:site_name" content="Mayesh Dani Portfolio" />
     
     <!-- Twitter -->
@@ -42,7 +27,7 @@
     <meta property="twitter:url" content="https://mayesh-dani.vercel.app/" />
     <meta property="twitter:title" content="Mayesh Dani | Interactive 3D Portfolio - Software Engineer" />
     <meta property="twitter:description" content="Explore my interactive 3D portfolio showcasing web development projects, skills, and experience." />
-    <meta property="twitter:image" content="hero.webp" />
+    <meta property="twitter:image" content="https://mayesh-dani.vercel.app/hero.webp" />
     
     <!-- Additional SEO -->
     <meta name="theme-color" content="#00c6ff" />
@@ -61,10 +46,6 @@
         "https://github.com/Mayesh21/",
         "https://www.linkedin.com/in/mayesh-dani-9a37bb206/"
       ],
-      "worksFor": {
-        "@type": "Organization",
-        "name": "WisdmLabs"
-      },
       "alumniOf": {
         "@type": "CollegeOrUniversity",
         "name": "University of Galway"

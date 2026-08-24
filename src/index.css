@@ -1265,3 +1265,60 @@ body:has(.card[data-color="green"]:hover) {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 198, 255, 0.3);
 }
+
+/* ------------------------------------------------------------------ */
+/* Accessibility: skip link, focus-visible, reduced motion             */
+/* Kept unlayered so they win over Tailwind's utility layer.           */
+/* ------------------------------------------------------------------ */
+
+/* Skip-to-content link: off-screen until focused, then pinned top-left */
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  background: #0072ff;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transform: translateY(-150%);
+  transition: transform 0.2s ease;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Global keyboard focus ring for interactive elements that lack one
+   (nav/footer/logo anchors, buttons). Inputs/textarea keep their own. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #0072ff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+/* main is a programmatic focus target for the skip link only */
+main#main-content:focus,
+main#main-content:focus-visible {
+  outline: none;
+}
+
+/* Respect prefers-reduced-motion: cut animations and non-essential motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

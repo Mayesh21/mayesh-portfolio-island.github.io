@@ -2,11 +2,14 @@ import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import NavBar from '../NavBar'
+import { ThemeProvider } from '../../contexts/ThemeContext'
 
 const renderWithRouter = (component) => {
   return render(
     <BrowserRouter>
-      {component}
+      <ThemeProvider>
+        {component}
+      </ThemeProvider>
     </BrowserRouter>
   )
 }

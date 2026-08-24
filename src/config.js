@@ -1,20 +1,9 @@
-// Dynamic configuration for GitHub Pages deployment
-const getRepoName = () => {
-  // Check if we're in production and on GitHub Pages
-  if (import.meta.env.PROD) {
-    // Extract repo name from current URL
-    const pathname = window.location.pathname;
-    const segments = pathname.split('/').filter(Boolean);
-    if (segments.length > 0) {
-      return `/${segments[0]}/`;
-    }
-  }
-  return '/';
-};
-
+// App configuration.
+// Deployed at the domain root on Vercel, so the router basename is always '/'.
+// (Vite's build `base` is handled separately in vite.config.js.)
 export const config = {
-  basename: getRepoName(),
-  baseUrl: import.meta.env.PROD 
-    ? window.location.origin + getRepoName()
+  basename: '/',
+  baseUrl: import.meta.env.PROD
+    ? window.location.origin
     : 'http://localhost:5173'
-}; 
+};
