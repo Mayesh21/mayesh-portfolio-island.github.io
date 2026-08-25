@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
 
@@ -93,7 +93,7 @@ const CTA = () => {
             to="/contact"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className={`group relative px-6 py-3 rounded-xl font-semibold text-base transition-all duration-300 transform hover:scale-105 ${isDark ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl' : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl'}`}
+            className={`cursor-target group relative px-6 py-3 rounded-xl font-semibold text-base transition-all duration-300 transform hover:scale-105 ${isDark ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl' : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl'}`}
           >
             <span className="relative z-10 flex items-center gap-2">
               {content.primaryAction}
@@ -106,7 +106,7 @@ const CTA = () => {
 
           <Link 
             to="/projects"
-            className={`px-6 py-3 rounded-xl font-semibold text-base transition-all duration-300 border-2 ${isDark ? 'border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-400' : 'border-gray-300 text-gray-700 hover:border-blue-500 hover:text-blue-600'}`}
+            className={`cursor-target px-6 py-3 rounded-xl font-semibold text-base transition-all duration-300 border-2 ${isDark ? 'border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-400' : 'border-gray-300 text-gray-700 hover:border-blue-500 hover:text-blue-600'}`}
           >
             {content.secondaryAction}
           </Link>
@@ -120,7 +120,7 @@ const CTA = () => {
             <svg className={`w-4 h-4 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
-            <a href="mailto:mayeshdani@gmail.com" className={`hover:underline ${isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}>
+            <a href="mailto:mayeshdani@gmail.com" className={`cursor-target hover:underline ${isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}>
               mayeshdani@gmail.com
             </a>
           </div>
@@ -128,7 +128,7 @@ const CTA = () => {
             <svg className={`w-4 h-4 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
-            <a href="tel:+918956790002" className={`hover:underline ${isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}>
+            <a href="tel:+918956790002" className={`cursor-target hover:underline ${isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}>
               +91 89567 90002
             </a>
           </div>
@@ -136,7 +136,7 @@ const CTA = () => {
             <svg className={`w-4 h-4 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
             </svg>
-            <a href="mailto:mayeshdani@gmail.com?subject=Schedule%20Google%20Meet" className={`hover:underline ${isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}>
+            <a href="mailto:mayeshdani@gmail.com?subject=Schedule%20Google%20Meet" className={`cursor-target hover:underline ${isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}>
               Schedule Google Meet
             </a>
           </div>

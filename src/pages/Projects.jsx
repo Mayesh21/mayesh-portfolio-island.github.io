@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+﻿import { useState, useMemo } from "react";
 import { projects, whiteIcons, monochromeIcons } from "../constants";
 import { arrow } from "../assets/icons";
 import CTA from "../components/CTA";
@@ -749,7 +749,7 @@ const Projects = () => {
         {filteredProjects.map((project, index) => (
           <RevealOnScroll key={project.id} animation="fade-up" delay={index * 80} className="lg:w-[400px] w-full">
           <div
-            className="lg:w-full w-full cursor-pointer group"
+            className="lg:w-full w-full cursor-pointer group cursor-target"
             onClick={() => handleProjectClick(project)}
           >
             <div className={`project-card hover-glow rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden ${

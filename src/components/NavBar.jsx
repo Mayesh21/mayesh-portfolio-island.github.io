@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+﻿import { NavLink } from "react-router-dom"
 import ThemeToggle from './ThemeToggle'
 import { useNavSlider } from '../hooks/useNavSlider'
 
@@ -12,7 +12,7 @@ const NavBar = () => {
         <div className="header-top-row">
           <NavLink 
             to="/" 
-            className="logo-link"
+            className="logo-link cursor-target"
             aria-label="Go to home page"
           >
             <p className="blue-gradient_text text-sm sm:text-base">MD</p>
@@ -39,7 +39,7 @@ const NavBar = () => {
           <div ref={sliderRef} className="nav-slider"></div>
           <NavLink
             to='/about'
-            className={( { isActive } ) => isActive ? 'nav-link active' : 'nav-link'}
+            className={( { isActive } ) => 'cursor-target ' + (isActive ? 'nav-link active' : 'nav-link')}
             aria-label="Go to about page"
             data-page="about"
           >
@@ -47,7 +47,7 @@ const NavBar = () => {
           </NavLink>
           <NavLink
             to='/projects'
-            className={( { isActive } ) => isActive ? 'nav-link active' : 'nav-link'}
+            className={( { isActive } ) => 'cursor-target ' + (isActive ? 'nav-link active' : 'nav-link')}
             aria-label="Go to projects page"
             data-page="projects"
           >
@@ -55,7 +55,7 @@ const NavBar = () => {
           </NavLink>
           <NavLink
             to='/contact'
-            className={( { isActive } ) => isActive ? 'nav-link active' : 'nav-link'}
+            className={( { isActive } ) => 'cursor-target ' + (isActive ? 'nav-link active' : 'nav-link')}
             aria-label="Go to contact page"
             data-page="contact"
           >
@@ -68,3 +68,4 @@ const NavBar = () => {
 }
 
 export default NavBar
+

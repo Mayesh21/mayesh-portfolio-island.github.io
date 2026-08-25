@@ -1322,3 +1322,5 @@ main#main-content:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+/* custom cursor — hide native pointer globally */
+*, *::before, *::after { cursor: none !important; }

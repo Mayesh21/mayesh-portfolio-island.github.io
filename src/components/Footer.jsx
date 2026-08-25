@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+﻿import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 
 const Footer = () => {
@@ -13,19 +13,19 @@ const Footer = () => {
       <div className="max-w-5xl mx-auto px-8 py-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Logo / Name */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2 cursor-target">
             <span className="blue-gradient_text font-bold text-lg">Mayesh Dani</span>
           </Link>
 
           {/* Quick Links */}
           <nav className="flex items-center gap-6" aria-label="Footer navigation">
-            <Link to="/about" className={`text-sm transition-colors ${isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}>
+            <Link to="/about" className={`cursor-target text-sm transition-colors ${isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}>
               About
             </Link>
-            <Link to="/projects" className={`text-sm transition-colors ${isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}>
+            <Link to="/projects" className={`cursor-target text-sm transition-colors ${isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}>
               Projects
             </Link>
-            <Link to="/contact" className={`text-sm transition-colors ${isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}>
+            <Link to="/contact" className={`cursor-target text-sm transition-colors ${isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}>
               Contact
             </Link>
           </nav>
@@ -36,7 +36,7 @@ const Footer = () => {
               href="https://github.com/Mayesh21"
               target="_blank"
               rel="noopener noreferrer"
-              className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isDark ? 'text-gray-400 hover:text-white hover:bg-gray-700' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-200'}`}
+              className={`cursor-target w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isDark ? 'text-gray-400 hover:text-white hover:bg-gray-700' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-200'}`}
               aria-label="GitHub"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -47,7 +47,7 @@ const Footer = () => {
               href="https://www.linkedin.com/in/mayesh-dani-9a37bb206/"
               target="_blank"
               rel="noopener noreferrer"
-              className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isDark ? 'text-gray-400 hover:text-white hover:bg-gray-700' : 'text-gray-500 hover:text-blue-600 hover:bg-blue-50'}`}
+              className={`cursor-target w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isDark ? 'text-gray-400 hover:text-white hover:bg-gray-700' : 'text-gray-500 hover:text-blue-600 hover:bg-blue-50'}`}
               aria-label="LinkedIn"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@ const Footer = () => {
             </a>
             <a
               href="mailto:mayeshdani@gmail.com"
-              className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isDark ? 'text-gray-400 hover:text-white hover:bg-gray-700' : 'text-gray-500 hover:text-red-500 hover:bg-red-50'}`}
+              className={`cursor-target w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isDark ? 'text-gray-400 hover:text-white hover:bg-gray-700' : 'text-gray-500 hover:text-red-500 hover:bg-red-50'}`}
               aria-label="Email"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,7 +68,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className={`mt-6 pt-6 border-t text-center text-sm ${isDark ? 'border-gray-800 text-gray-500' : 'border-gray-200 text-gray-400'}`}>
-          <p>&copy; {new Date().getFullYear()} Mayesh Dani. Built with React & Three.js</p>
+          <p>&copy; {new Date().getFullYear()} Mayesh Dani. Built with React &amp; Three.js</p>
         </div>
       </div>
     </footer>

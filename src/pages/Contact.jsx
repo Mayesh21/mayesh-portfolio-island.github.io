@@ -1,4 +1,4 @@
-import { Suspense, useRef, useState, useEffect } from 'react'
+﻿import { Suspense, useRef, useState, useEffect } from 'react'
 import emailjs from '@emailjs/browser'
 import { Canvas } from '@react-three/fiber';
 import Fox from '../models/Fox'
@@ -243,7 +243,7 @@ const Contact = () => {
           </div>
           <button
             type='submit'
-            className='btn flex items-center justify-center gap-2 hover:scale-105 transition-transform duration-200'
+            className='cursor-target btn flex items-center justify-center gap-2 hover:scale-105 transition-transform duration-200'
             disabled={isloading}
             onFocus={handleFocus}
             onBlur={handleBlur}
