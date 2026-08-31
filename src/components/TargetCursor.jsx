@@ -73,6 +73,15 @@ const TargetCursor = ({
     };
     buildSpin();
 
+    // Reusable position tweens. quickTo keeps ONE tween per axis and just
+    // retargets it each move, instead of allocating a fresh gsap.to() on
+    // every pointermove. During a 3D drag the pointer fires 100+ moves/sec,
+    // so this removes most of the cursor's per-frame main-thread cost and
+    // stops it starving the R3F render loop (low-fps stutter).
+    const xTo = gsap.quickTo(wrapper, "x", { duration: 0.12, ease: "power3.out" });
+    const yTo = gsap.quickTo(wrapper, "y", { duration: 0.12, ease: "power3.out" });
+    let shown = false;
+
     const spreadToTarget = (target) => {
       // Target removed from DOM (e.g. modal closed via its X button):
       // no mouseout fires, and getBoundingClientRect() would return zeros,
@@ -131,15 +140,13 @@ const TargetCursor = ({
 
     const onMove = (e) => {
       posRef.current = { x: e.clientX, y: e.clientY };
-      gsap.set(wrapper, { opacity: 1 });
+      if (!shown) {
+        gsap.set(wrapper, { opacity: 1 });
+        shown = true;
+      }
       if (parallaxOn) {
-        gsap.to(wrapper, {
-          x: e.clientX,
-          y: e.clientY,
-          duration: 0.12,
-          ease: "power3.out",
-          overwrite: "auto",
-        });
+        xTo(e.clientX);
+        yTo(e.clientY);
       } else {
         gsap.set(wrapper, { x: e.clientX, y: e.clientY });
       }

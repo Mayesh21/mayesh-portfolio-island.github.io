@@ -1,4 +1,4 @@
-﻿import { useRef, useCallback } from "react";
+import { useRef, useCallback } from "react";
 
 const easeOut = (t) => 1 - Math.pow(1 - t, 3);
 
@@ -108,6 +108,9 @@ const ClickSpark = ({
           position: "absolute",
           top: 0,
           left: 0,
+          width: "100%",
+          height: "100%",
+          display: "block",
           pointerEvents: "none",
           zIndex: 9998,
         }}

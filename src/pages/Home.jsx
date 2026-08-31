@@ -45,7 +45,7 @@ const Home = () => {
   }, []);
   
   return (
-    <section className='w-full h-screen relative'>
+    <section className='w-full h-screen relative overflow-hidden'>
       {/* Accessibility instructions - hidden visually but available to screen readers */}
       <div id="island-instructions" className="sr-only">
         Interactive 3D island. Use your mouse to click and drag to rotate the island, or use the left and right arrow keys to rotate. 
