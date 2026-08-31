@@ -9,7 +9,7 @@ export const trackPerformance = () => {
       const paint = performance.getEntriesByType('paint');
       
       const metrics = {
-        pageLoadTime: navigation.loadEventEnd - navigation.loadEventStart,
+        pageLoadTime: Math.max(0, navigation.loadEventEnd - navigation.startTime),
         domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,
         firstPaint: paint.find(entry => entry.name === 'first-paint')?.startTime,
         firstContentfulPaint: paint.find(entry => entry.name === 'first-contentful-paint')?.startTime,
@@ -20,7 +20,6 @@ export const trackPerformance = () => {
       
       // Send to analytics service in production
       if (import.meta.env.PROD) {
-        // You can integrate with Google Analytics, Mixpanel, etc.
         // gtag('event', 'performance', metrics);
       }
     });
@@ -109,17 +108,23 @@ export const track3DPerformance = () => {
 
   if (typeof window !== 'undefined') {
     let frameCount = 0;
-    let lastTime = performance.now();
+    
+    // Ignore the first 3 seconds of load to skip shader compile lag
+    const startTime = performance.now();
+    let lastTime = startTime;
 
     const measureFPS = () => {
       frameCount++;
       const currentTime = performance.now();
 
       if (currentTime - lastTime >= 1000) {
-        const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+        // Only start grading FPS once the initial boot phase finishes
+        if (currentTime - startTime > 3000) {
+          const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
 
-        if (fps < 30) {
-          trackEvent('low_fps_warning', { fps });
+          if (fps < 30) {
+            trackEvent('low_fps_warning', { fps });
+          }
         }
 
         frameCount = 0;
@@ -138,4 +143,4 @@ export const stopTrack3DPerformance = () => {
     cancelAnimationFrame(fpsRafId);
     fpsRafId = null;
   }
-}; 
+};
