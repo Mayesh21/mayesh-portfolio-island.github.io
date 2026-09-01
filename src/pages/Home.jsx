@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unknown-property */
-import { Suspense, useState, useEffect, useRef, useMemo } from 'react'
+﻿import { Suspense, useState, useEffect, useMemo } from 'react'
 import { Canvas } from '@react-three/fiber'
 import ThreeDLoader from '../components/3DLoader'
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -14,12 +13,7 @@ import { soundoff, soundon } from '../assets/icons'
 
 
 const Home = () => {
-  const audioRef = useRef(null);
-  if (!audioRef.current) {
-    audioRef.current = new Audio(sakura);
-    audioRef.current.volume = 0.4;
-    audioRef.current.loop = true;
-  }
+  const [audio] = useState(() => { const a = new Audio(sakura); a.volume = 0.4; a.loop = true; return a; });
   const [isRotating, setIsRotating] = useState(false);
   const [currentStage, setCurrentStage] = useState(1);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
@@ -32,9 +26,9 @@ const Home = () => {
   const { scale: planeScale, position: planePosition } = useMemo(() => getPlanePosition(), []);
 
   useEffect(() => {
-    if(isPlayingMusic) audioRef.current.play();
-    return () => audioRef.current.pause();
-  }, [isPlayingMusic]);
+    if(isPlayingMusic) audio.play();
+    return () => audio.pause();
+  }, [isPlayingMusic, audio]);
 
   // Set loading to false after a short delay to ensure 3D models are loaded
   useEffect(() => {
@@ -111,3 +105,4 @@ const Home = () => {
 }
 
 export default Home
+

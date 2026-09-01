@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react'
+﻿import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 
 const THEME_STORAGE_KEY = 'portfolio-theme'
@@ -13,9 +13,20 @@ export const useTheme = () => {
   return context
 }
 
+const getInitialTheme = () => {
+  if (typeof window === 'undefined') return 'light'
+  
+  const savedTheme = localStorage.getItem(THEME_STORAGE_KEY)
+  if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+    return savedTheme
+  }
+  
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light')
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [theme, setTheme] = useState(getInitialTheme)
+  const [isLoaded] = useState(true)
   const location = useLocation()
   
   // Check if we're on the home page - memoized to prevent unnecessary re-renders
@@ -23,25 +34,8 @@ export const ThemeProvider = ({ children }) => {
     return location.pathname === '/' || location.pathname === ''
   }, [location.pathname])
 
-  // Initialize theme from localStorage or system preference
-  useEffect(() => {
-    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY)
-    
-    if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
-      setTheme(savedTheme)
-    } else {
-      // Check system preference
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setTheme(prefersDark ? 'dark' : 'light')
-    }
-    
-    setIsLoaded(true)
-  }, [])
-
   // Apply theme to document
   useEffect(() => {
-    if (!isLoaded) return
-
     const root = document.documentElement
     
     // Force light mode on home page, use actual theme on other pages
@@ -59,7 +53,7 @@ export const ThemeProvider = ({ children }) => {
     if (!isHomePage) {
       localStorage.setItem(THEME_STORAGE_KEY, theme)
     }
-  }, [theme, isLoaded, isHomePage])
+  }, [theme, isHomePage])
 
   // Listen for system theme changes
   useEffect(() => {
@@ -101,4 +95,4 @@ export const ThemeProvider = ({ children }) => {
       {children}
     </ThemeContext.Provider>
   )
-} 
+}

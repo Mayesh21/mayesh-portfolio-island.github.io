@@ -1,4 +1,4 @@
-import { useRef, useCallback } from "react";
+﻿import { useRef, useCallback, useEffect } from "react";
 
 const easeOut = (t) => 1 - Math.pow(1 - t, 3);
 
@@ -14,6 +14,7 @@ const ClickSpark = ({
   const canvasRef = useRef(null);
   const sparksRef = useRef([]);
   const rafRef = useRef(null);
+  const drawRef = useRef(null);
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -55,9 +56,11 @@ const ClickSpark = ({
     });
 
     if (sparksRef.current.length > 0) {
-      rafRef.current = requestAnimationFrame(draw);
+      rafRef.current = requestAnimationFrame(() => drawRef.current());
     }
   }, [sparkColor, sparkSize, sparkRadius, duration, extraScale]);
+
+  useEffect(() => { drawRef.current = draw; }, [draw]);
 
   const handleClick = useCallback(
     (e) => {
@@ -78,9 +81,9 @@ const ClickSpark = ({
       }
 
       cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(draw);
+      rafRef.current = requestAnimationFrame(() => drawRef.current());
     },
-    [sparkCount, draw]
+    [sparkCount]
   );
 
   const initCanvas = useCallback((node) => {
@@ -121,3 +124,4 @@ const ClickSpark = ({
 };
 
 export default ClickSpark;
+

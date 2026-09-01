@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unknown-property */
-import { useRef, useMemo } from 'react'
+﻿import { useRef, useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { getDRACOLoader } from '../utils/dracoLoader'

@@ -1,32 +1,23 @@
-import { useState, useEffect, useCallback } from 'react'
+﻿import { useState, useEffect, useCallback } from 'react'
 
 const THEME_STORAGE_KEY = 'portfolio-theme'
 
-export const useTheme = () => {
-  const [theme, setTheme] = useState('light')
-  const [isLoaded, setIsLoaded] = useState(false)
+const getInitialTheme = () => {
+  if (typeof window === 'undefined') return 'light'
+  const savedTheme = localStorage.getItem(THEME_STORAGE_KEY)
+  if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+    return savedTheme
+  }
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
 
-  // Initialize theme from localStorage or system preference
-  useEffect(() => {
-    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY)
-    
-    if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
-      setTheme(savedTheme)
-    } else {
-      // Check system preference
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setTheme(prefersDark ? 'dark' : 'light')
-    }
-    
-    setIsLoaded(true)
-  }, [])
+export const useTheme = () => {
+  const [theme, setTheme] = useState(getInitialTheme)
+  const isLoaded = true
 
   // Apply theme to document
   useEffect(() => {
-    if (!isLoaded) return
-
     const root = document.documentElement
-    
     if (theme === 'dark') {
       root.classList.add('dark')
       root.setAttribute('data-theme', 'dark')
@@ -34,20 +25,17 @@ export const useTheme = () => {
       root.classList.remove('dark')
       root.setAttribute('data-theme', 'light')
     }
-    
     localStorage.setItem(THEME_STORAGE_KEY, theme)
-  }, [theme, isLoaded])
+  }, [theme])
 
   // Listen for system theme changes
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    
     const handleChange = (e) => {
       if (!localStorage.getItem(THEME_STORAGE_KEY)) {
         setTheme(e.matches ? 'dark' : 'light')
       }
     }
-    
     mediaQuery.addEventListener('change', handleChange)
     return () => mediaQuery.removeEventListener('change', handleChange)
   }, [])
@@ -72,4 +60,4 @@ export const useTheme = () => {
     setDarkTheme,
     isDark: theme === 'dark'
   }
-} 
+}
