@@ -26,7 +26,7 @@ const roles = [
     'WordPress Expert',
     'AI/ML Practitioner',
     'Cloud & DevOps',
-    'MSc AI @ Galway',
+    // 'MSc AI @ Galway',
 ];
 
 const HeroTyping = () => {

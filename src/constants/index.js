@@ -17,7 +17,7 @@ import {
     snapEdit,
     physipal,
     wisdmlabsIcon,
-    universityOfGalway,
+    // universityOfGalway,
     react,
     php,
     mysql,
@@ -262,7 +262,7 @@ export const skills = [
 
 
 export const experiences = [
-    {
+    /* {
         title: "MSc Artificial Intelligence",
         company_name: "University of Galway",
         role: "Academic",
@@ -283,7 +283,7 @@ export const experiences = [
             "Deepening theoretical and practical expertise in machine learning, deep learning, and intelligent systems.",
             "Building on prior industry experience in scalable web systems and AI-assisted development to specialize further in AI/ML."
         ],
-    },
+    }, */
     {
         title: "Software Engineer",
         company_name: "WisdmLabs",

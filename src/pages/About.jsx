@@ -44,7 +44,8 @@ const About = () => {
       <RevealOnScroll animation="fade-up" delay={100}>
         <div className="mt-5 flex flex-col gap-3 text-slate-500">
           <p>
-          Computer Science postgraduate with over two years of professional experience as a Full Stack Software Engineer, specializing in scalable web systems, backend development, and cloud-based deployments. I&apos;m now furthering that foundation with an MSc in Artificial Intelligence at the University of Galway, Ireland, combining industry experience with a passion for building intelligent, high-performance applications.
+          Computer Science postgraduate with over two years of professional experience as a Full Stack Software Engineer, specializing in scalable web systems, backend development, and cloud-based deployments, with a passion for building intelligent, high-performance applications and exploring modern AI/ML technologies.
+          {/* Computer Science postgraduate with over two years of professional experience as a Full Stack Software Engineer, specializing in scalable web systems, backend development, and cloud-based deployments. I&apos;m now furthering that foundation with an MSc in Artificial Intelligence at the University of Galway, Ireland, combining industry experience with a passion for building intelligent, high-performance applications. */}
           </p>
         </div>
       </RevealOnScroll>
