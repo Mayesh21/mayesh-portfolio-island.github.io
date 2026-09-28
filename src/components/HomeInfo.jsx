@@ -22,11 +22,10 @@ InfoBox.propTypes = {
 
 const roles = [
     'Full Stack Engineer',
-    'Backend Developer',
-    'WordPress Expert',
-    'AI/ML Practitioner',
-    'Cloud & DevOps',
-    // 'MSc AI @ Galway',
+    'React & Frontend Developer',
+    'REST API & Backend Engineer',
+    'AI & RAG Systems Builder',
+    'Cloud & DevOps Engineer',
 ];
 
 const HeroTyping = () => {

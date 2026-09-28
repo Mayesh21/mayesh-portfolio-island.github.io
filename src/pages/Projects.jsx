@@ -1,5 +1,5 @@
 ﻿import { useState, useMemo } from "react";
-import { projects, whiteIcons, monochromeIcons } from "../constants";
+import { projects, clientWork, whiteIcons, monochromeIcons } from "../constants";
 import { arrow } from "../assets/icons";
 import CTA from "../components/CTA";
 import ProjectModal from "../components/ProjectModal";
@@ -880,6 +880,93 @@ const Projects = () => {
           </p>
         </div>
       )}
+
+      {/* Client Work & Production Websites */}
+      <div className="py-16">
+        <RevealOnScroll animation="fade-up">
+          <div className="mb-8">
+            <h3 className="subhead-text">Client Work</h3>
+            <p className={`mt-3 text-base max-w-2xl ${isDark ? 'text-gray-400' : 'text-slate-500'}`}>
+              Production systems, data migrations, and custom applications engineered for enterprise clients. Engagements focused on payment token migrations, custom product architectures, geospatial portals, LMS automation, and production site reliability.
+            </p>
+          </div>
+        </RevealOnScroll>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {clientWork.map((client, index) => (
+            <RevealOnScroll key={client.id} animation="fade-up" delay={index * 60}>
+              <div className={`h-full rounded-xl p-6 border shadow-md hover:-translate-y-1 transition-all duration-300 ${
+                isDark ? 'bg-gray-800 border-gray-700 hover:border-blue-700' : 'bg-white border-gray-100 hover:border-blue-200'
+              }`}>
+                {/* Header */}
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <div>
+                    <h4 className={`font-bold text-lg leading-snug ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      {client.name}
+                    </h4>
+                    <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                        isDark ? 'bg-blue-900/60 text-blue-300' : 'bg-blue-100 text-blue-700'
+                      }`}>
+                        {client.category}
+                      </span>
+                      {client.timeline && (
+                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                          isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
+                        }`}>
+                          {client.timeline}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <a
+                    href={client.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit ${client.name} website`}
+                    className={`shrink-0 inline-flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg border transition-colors duration-200 ${
+                      isDark
+                        ? 'border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-400'
+                        : 'border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600'
+                    }`}
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    Live Site
+                  </a>
+                </div>
+
+                {/* Scope */}
+                <ul className="space-y-2 mb-4">
+                  {client.scope.map((point, i) => (
+                    <li key={i} className={`text-sm flex items-start gap-2.5 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" aria-hidden="true" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Technologies */}
+                <div className="flex flex-wrap gap-1.5">
+                  {client.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className={`text-xs px-2 py-0.5 rounded-full font-medium border ${
+                        isDark
+                          ? 'bg-gray-700 text-gray-300 border-gray-600'
+                          : 'bg-gray-50 text-gray-600 border-gray-200'
+                      }`}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </RevealOnScroll>
+          ))}
+        </div>
+      </div>
 
       <CTA />
 
