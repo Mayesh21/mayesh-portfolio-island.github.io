@@ -159,7 +159,7 @@ const Projects = () => {
       
       <div className="mt-5 flex flex-col gap-3 text-slate-500">
         <p>
-          I&apos;ve worked on a variety of personal projects that have helped me grow as a developer. While some are small-scale, each one reflects my passion for coding and continuous learning. Many of these projects are open-source, so if you find something intriguing, feel free to explore the code and contribute your ideas for improvements!
+          Production applications and personal projects built across 2.5+ years of professional software engineering. Client work covers AI/RAG systems, payment integrations, LMS platforms, and high-volume data migrations. Personal and academic projects are listed below the professional work.
         </p>
       </div>
 

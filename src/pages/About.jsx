@@ -44,7 +44,7 @@ const About = () => {
       <RevealOnScroll animation="fade-up" delay={100}>
         <div className="mt-5 flex flex-col gap-3 text-slate-500">
           <p>
-          Computer Science postgraduate with over two years of professional experience as a Full Stack Software Engineer, specializing in scalable web systems, backend development, and cloud-based deployments, with a passion for building intelligent, high-performance applications and exploring modern AI/ML technologies.
+          Computer Science postgraduate with 2.5+ years of professional experience as a Full Stack Software Engineer at WisdmLabs, specializing in scalable web systems, backend development, and cloud-based deployments. Practical experience across the full stack includes frontend implementation, responsive layouts, and visual UI work alongside backend and infrastructure responsibilities. Interested in building intelligent, high-performance applications and exploring modern AI/ML technologies.
           </p>
         </div>
       </RevealOnScroll>
@@ -145,7 +145,7 @@ const About = () => {
         </RevealOnScroll>
         <div className="mt-5 flex flex-col gap-3 text-slate-500">
           <p>
-          Over two-plus years at WisdmLabs, I collaborated with clients to architect and deliver scalable web platforms, built AI-powered systems, and optimized enterprise applications. Here&apos;s my journey:
+          2.5+ years at WisdmLabs, delivering scalable web platforms, AI-powered systems, and enterprise application optimization for clients across education, events, and non-profit sectors. Here&apos;s my journey:
           </p>
         </div>
         <div className="mt-12 flex">
@@ -252,18 +252,20 @@ const About = () => {
                         </div>
                         <span className="font-medium">{experience.location}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                          isDark ? 'bg-purple-900' : 'bg-purple-100'
-                        }`}>
-                          <svg className={`w-4 h-4 ${
-                            isDark ? 'text-purple-300' : 'text-purple-600'
-                          }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                          </svg>
+                      {experience.teamSize && (
+                        <div className="flex items-center gap-2">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                            isDark ? 'bg-purple-900' : 'bg-purple-100'
+                          }`}>
+                            <svg className={`w-4 h-4 ${
+                              isDark ? 'text-purple-300' : 'text-purple-600'
+                            }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                          </div>
+                          <span className="font-medium">{experience.teamSize}</span>
                         </div>
-                        <span className="font-medium">{experience.teamSize}</span>
-                      </div>
+                      )}
                     </div>
                   </div>
 

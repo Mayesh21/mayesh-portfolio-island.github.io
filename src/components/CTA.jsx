@@ -12,31 +12,39 @@ const CTA = () => {
     switch (location.pathname) {
       case '/about':
         return {
-          title: "Ready to bring your ideas to life?",
-          subtitle: "Let's discuss your project requirements and create something amazing together.",
-          primaryAction: "Start Your Project",
-          secondaryAction: "View My Work"
+          title: "Interested in my work?",
+          subtitle: "I'm open to full-time roles and contract engagements in software engineering.",
+          primaryAction: "Contact Me",
+          primaryLink: "/contact",
+          secondaryAction: "View Projects",
+          secondaryLink: "/projects"
         }
       case '/projects':
         return {
-          title: "Want to build something similar?",
-          subtitle: "I can help you create custom solutions tailored to your specific needs.",
-          primaryAction: "Discuss Your Project",
-          secondaryAction: "Get a Quote"
+          title: "Want to know more?",
+          subtitle: "Get in touch to discuss how my experience maps to what you are building.",
+          primaryAction: "Contact Me",
+          primaryLink: "/contact",
+          secondaryAction: "View Resume",
+          secondaryHref: "/Mayesh_Dani_Resume.pdf"
         }
       case '/contact':
         return {
-          title: "Ready to start your project?",
-          subtitle: "Let's turn your vision into reality with custom development solutions.",
+          title: "Reach out directly",
+          subtitle: "Email, phone, or Google Meet - pick what works for you.",
           primaryAction: "Send Message",
-          secondaryAction: "Schedule Call"
+          primaryLink: "/contact",
+          secondaryAction: "Back to Projects",
+          secondaryLink: "/projects"
         }
       default:
         return {
-          title: "Have a project in mind?",
-          subtitle: "Let's build something amazing together with custom development solutions.",
-          primaryAction: "Get Started",
-          secondaryAction: "Learn More"
+          title: "Interested in working together?",
+          subtitle: "I'm looking for software engineering roles where I can contribute from day one.",
+          primaryAction: "Contact Me",
+          primaryLink: "/contact",
+          secondaryAction: "View Projects",
+          secondaryLink: "/projects"
         }
     }
   }
@@ -65,7 +73,7 @@ const CTA = () => {
               {content.title}
             </h2>
           </div>
-          
+
           <p className={`text-base md:text-lg mb-4 ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-xl`}>
             {content.subtitle}
           </p>
@@ -89,13 +97,13 @@ const CTA = () => {
 
         {/* Action Buttons */}
         <div className="flex flex-col gap-3">
-          <Link 
-            to="/contact"
+          <Link
+            to={content.primaryLink || "/contact"}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className={`cursor-target group relative px-6 py-3 rounded-xl font-semibold text-base transition-all duration-300 transform hover:scale-105 ${isDark ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl' : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl'}`}
+            className={`cursor-target group relative px-6 py-3 rounded-xl font-semibold text-base text-center transition-all duration-300 transform hover:scale-105 ${isDark ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl' : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl'}`}
           >
-            <span className="relative z-10 flex items-center gap-2">
+            <span className="relative z-10 flex items-center justify-center gap-2">
               {content.primaryAction}
               <svg className={`w-5 h-5 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -104,12 +112,23 @@ const CTA = () => {
             <div className={`absolute inset-0 rounded-xl bg-gradient-to-r from-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
           </Link>
 
-          <Link 
-            to="/projects"
-            className={`cursor-target px-6 py-3 rounded-xl font-semibold text-base transition-all duration-300 border-2 ${isDark ? 'border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-400' : 'border-gray-300 text-gray-700 hover:border-blue-500 hover:text-blue-600'}`}
-          >
-            {content.secondaryAction}
-          </Link>
+          {content.secondaryHref ? (
+            <a
+              href={content.secondaryHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`cursor-target px-6 py-3 rounded-xl font-semibold text-base text-center transition-all duration-300 border-2 ${isDark ? 'border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-400' : 'border-gray-300 text-gray-700 hover:border-blue-500 hover:text-blue-600'}`}
+            >
+              {content.secondaryAction}
+            </a>
+          ) : (
+            <Link
+              to={content.secondaryLink || "/projects"}
+              className={`cursor-target px-6 py-3 rounded-xl font-semibold text-base text-center transition-all duration-300 border-2 ${isDark ? 'border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-400' : 'border-gray-300 text-gray-700 hover:border-blue-500 hover:text-blue-600'}`}
+            >
+              {content.secondaryAction}
+            </Link>
+          )}
         </div>
       </div>
 
