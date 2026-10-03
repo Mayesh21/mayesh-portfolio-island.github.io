@@ -20,8 +20,6 @@ const Projects = () => {
   const [showTechnologyDropdown, setShowTechnologyDropdown] = useState(false);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [dateRange, setDateRange] = useState({ start: '', end: '' });
-  const [difficultyFilter, setDifficultyFilter] = useState([]);
-  const [recentlyViewed, setRecentlyViewed] = useState([]);
 
   // Separate projects into tiers FIRST
   const professionalProjects = useMemo(() => {
@@ -43,8 +41,21 @@ const Projects = () => {
     return techs.sort();
   }, [academicProjects]);
 
+  // Extract the last 4-digit year from any date string ("2025", "2024 - 2026", "Jan 2024 - Aug 2026")
+  const extractEndYear = (dateStr) => {
+    const matches = String(dateStr).match(/\d{4}/g);
+    if (!matches) return null;
+    return Math.max(...matches.map(Number));
+  };
+
+  const extractStartYear = (dateStr) => {
+    const matches = String(dateStr).match(/\d{4}/g);
+    if (!matches) return null;
+    return Math.min(...matches.map(Number));
+  };
+
   // Derive year bounds from academic project data
-  const projectYears = useMemo(() => academicProjects.map(project => parseInt(project.date, 10)), [academicProjects]);
+  const projectYears = useMemo(() => academicProjects.map(p => extractEndYear(p.date)).filter(Boolean), [academicProjects]);
   const earliestYear = useMemo(() => Math.min(...projectYears), [projectYears]);
   const mostRecentYear = useMemo(() => Math.max(...projectYears), [projectYears]);
   const currentYear = new Date().getFullYear();
@@ -61,12 +72,13 @@ const Projects = () => {
       const matchesTechnology = selectedTechnologies.length === 0 ||
                                selectedTechnologies.some(tech => project.technologies.includes(tech));
 
-      const matchesDateRange = (!dateRange.start || project.date >= dateRange.start) &&
-                              (!dateRange.end || project.date <= dateRange.end);
+      const projectEndYear = extractEndYear(project.date);
+      const projectStartYear = extractStartYear(project.date);
+      const matchesDateRange = (!dateRange.start || projectEndYear >= Number(dateRange.start)) &&
+                              (!dateRange.end || projectStartYear <= Number(dateRange.end));
 
-      const matchesDifficulty = difficultyFilter.length === 0 || difficultyFilter.includes(project.difficulty);
 
-      return matchesSearch && matchesCategory && matchesTechnology && matchesDateRange && matchesDifficulty;
+      return matchesSearch && matchesCategory && matchesTechnology && matchesDateRange;
     });
 
     // Sort projects
@@ -88,17 +100,11 @@ const Projects = () => {
     });
 
     return filtered;
-  }, [searchTerm, selectedCategories, selectedTechnologies, sortBy, dateRange, difficultyFilter, academicProjects]);
+  }, [searchTerm, selectedCategories, selectedTechnologies, sortBy, dateRange, academicProjects]);
 
   const handleProjectClick = (project) => {
     setSelectedProject(project);
     setIsModalOpen(true);
-    
-    // Add to recently viewed
-    setRecentlyViewed(prev => {
-      const filtered = prev.filter(p => p.id !== project.id);
-      return [project, ...filtered].slice(0, 3);
-    });
   };
 
   const closeModal = () => {
@@ -135,7 +141,6 @@ const Projects = () => {
     setSelectedTechnologies([]);
     setSearchTerm("");
     setDateRange({ start: '', end: '' });
-    setDifficultyFilter([]);
   };
 
   // Quick filter presets (academic projects only)
@@ -145,7 +150,7 @@ const Projects = () => {
     { name: "Games", action: () => setSelectedCategories(["Game"]), count: academicProjects.filter(p => p.category === "Game").length },
     { name: "Mobile Apps", action: () => setSelectedCategories(["Mobile Application"]), count: academicProjects.filter(p => p.category === "Mobile Application").length },
     { name: "React Projects", action: () => setSelectedTechnologies(["React"]), count: academicProjects.filter(p => p.technologies.includes("React")).length },
-    { name: `Recent (${mostRecentYear})`, action: () => setSearchTerm(String(mostRecentYear)), count: academicProjects.filter(p => p.date === String(mostRecentYear)).length },
+    { name: `Recent (${mostRecentYear})`, action: () => setDateRange({ start: String(mostRecentYear), end: String(mostRecentYear) }), count: academicProjects.filter(p => extractEndYear(p.date) === mostRecentYear).length },
   ];
 
 
@@ -345,76 +350,6 @@ const Projects = () => {
         </div>
       )}
 
-      {/* Recently Viewed Projects */}
-      {recentlyViewed.length > 0 && (
-        <div className="mt-8">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Recently Viewed</h3>
-          <div className="flex gap-4 overflow-x-auto pb-4">
-            {recentlyViewed.map((project) => (
-              <div
-                key={project.id}
-                onClick={() => handleProjectClick(project)}
-                className={`project-card recently-viewed-card shrink-0 w-80 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:scale-105 hover:-translate-y-1 ${
-                  isDark 
-                    ? 'bg-gray-800 border border-gray-700' 
-                    : 'bg-white border border-gray-100'
-                }`}
-              >
-                <div className="p-4">
-                  <div className="flex items-center gap-3 mb-3">
-            <div className="block-container w-12 h-12">
-                      <div className={`btn-back rounded-xl ${project.theme}`} />
-                      <div className="btn-front rounded-xl flex justify-center items-center">
-                        {whiteIcons.includes(project.iconUrl) ? (
-                          <img
-                            src={project.iconUrl}
-                            alt="Project Icon"
-                            className="w-1/2 h-1/2 object-contain"
-                          />
-                        ) : (
-                          <div className="icon-chip w-1/2 h-1/2 p-1">
-                            <img
-                              src={project.iconUrl}
-                              alt="Project Icon"
-                              className="w-full h-full object-contain"
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <h4 className={`font-semibold text-sm ${isDark ? 'text-white' : 'text-gray-900'}`}>{project.name}</h4>
-                      <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{project.category}</p>
-                    </div>
-                  </div>
-                  <p className={`text-xs line-clamp-2 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{project.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Quick Filter Presets */}
-      <div className="mt-8">
-        <h3 className="text-lg font-semibold text-gray-900 mb-3">Quick Filters</h3>
-        <div className="flex flex-wrap gap-2">
-          {quickFilters.map((filter, index) => (
-            <button
-              key={index}
-              onClick={filter.action}
-              className={`px-4 py-2 border rounded-lg transition-colors text-sm font-medium ${
-                isDark 
-                  ? 'bg-gray-800 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white' 
-                  : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-gray-900'
-              }`}
-            >
-              {filter.name} ({filter.count})
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* TIER 2: Client Work & Production Websites */}
       <div className="py-12">
         <RevealOnScroll animation="fade-up">
@@ -513,6 +448,26 @@ const Projects = () => {
           </div>
         </RevealOnScroll>
 
+        {/* Quick Filter Presets */}
+        <div className="mb-6">
+          <h3 className={`text-sm font-semibold uppercase tracking-wide mb-3 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Quick Filters</h3>
+          <div className="flex flex-wrap gap-2">
+            {quickFilters.map((filter, index) => (
+              <button
+                key={index}
+                onClick={filter.action}
+                className={`px-4 py-2 border rounded-lg transition-colors text-sm font-medium ${
+                  isDark
+                    ? 'bg-gray-800 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white'
+                    : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                }`}
+              >
+                {filter.name} ({filter.count})
+              </button>
+            ))}
+          </div>
+        </div>
+
       {/* Search and Filters */}
       <div className="mt-8 space-y-4">
         {/* Search Bar */}
@@ -539,7 +494,7 @@ const Projects = () => {
         </div>
 
         {/* Filter Controls */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Category Filter */}
           <div className="relative">
             <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Category</label>
@@ -792,35 +747,10 @@ const Projects = () => {
             </div>
           </div>
 
-          {/* Difficulty Filter */}
-          <div>
-            <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Difficulty</label>
-            <div className="flex flex-wrap gap-2">
-              {['Beginner', 'Intermediate', 'Advanced'].map((difficulty) => (
-                <button
-                  key={difficulty}
-                  onClick={() => setDifficultyFilter(prev => 
-                    prev.includes(difficulty) 
-                      ? prev.filter(d => d !== difficulty)
-                      : [...prev, difficulty]
-                  )}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                    difficultyFilter.includes(difficulty)
-                      ? 'bg-blue-500 text-white'
-                      : isDark 
-                        ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' 
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {difficulty}
-                </button>
-              ))}
-            </div>
           </div>
-        </div>
 
         {/* Active Filters Display */}
-        {(selectedCategories.length > 0 || selectedTechnologies.length > 0 || difficultyFilter.length > 0 || dateRange.start || dateRange.end) && (
+        {(selectedCategories.length > 0 || selectedTechnologies.length > 0  || dateRange.start || dateRange.end) && (
           <div className="flex flex-wrap gap-2">
             {selectedCategories.map(category => (
               <span
@@ -848,8 +778,8 @@ const Projects = () => {
               <span
                 key={technology}
                 className={`inline-flex items-center px-3 py-1 rounded-full text-sm ${
-                  isDark 
-                    ? 'bg-green-900 text-green-200' 
+                  isDark
+                    ? 'bg-green-900 text-green-200'
                     : 'bg-green-100 text-green-800'
                 }`}
               >
@@ -857,31 +787,9 @@ const Projects = () => {
                 <button
                   onClick={() => toggleTechnology(technology)}
                   className={`ml-2 ${
-                    isDark 
-                      ? 'text-green-400 hover:text-green-300' 
+                    isDark
+                      ? 'text-green-400 hover:text-green-300'
                       : 'text-green-600 hover:text-green-800'
-                  }`}
-                >
-                  ×
-                </button>
-              </span>
-            ))}
-            {difficultyFilter.map(difficulty => (
-              <span
-                key={difficulty}
-                className={`inline-flex items-center px-3 py-1 rounded-full text-sm ${
-                  isDark 
-                    ? 'bg-purple-900 text-purple-200' 
-                    : 'bg-purple-100 text-purple-800'
-                }`}
-              >
-                {difficulty}
-                <button
-                  onClick={() => setDifficultyFilter(prev => prev.filter(d => d !== difficulty))}
-                  className={`ml-2 ${
-                    isDark 
-                      ? 'text-purple-400 hover:text-purple-300' 
-                      : 'text-purple-600 hover:text-purple-800'
                   }`}
                 >
                   ×
