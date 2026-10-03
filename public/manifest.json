@@ -16,9 +16,9 @@
                    ],
     "icons":  [
                   {
-                      "type":  "image/x-icon",
+                      "type":  "image/png",
                       "sizes":  "16x16 32x32",
-                      "src":  "favicon.ico"
+                      "src":  "favicon.png"
                   },
                   {
                       "purpose":  "any maskable",
