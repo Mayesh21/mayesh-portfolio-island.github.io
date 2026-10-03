@@ -5,7 +5,6 @@ import CTA from "../components/CTA";
 import ProjectModal from "../components/ProjectModal";
 import RevealOnScroll from "../components/RevealOnScroll";
 import AnimatedCounter from "../components/AnimatedCounter";
-import GitHubStats from "../components/GitHubStats";
 import { useTheme } from "../contexts/ThemeContext";
 import { getDifficultyColor, getStatusColor, getDifficultyLevel } from "../utils/projectUtils";
 
@@ -24,45 +23,49 @@ const Projects = () => {
   const [difficultyFilter, setDifficultyFilter] = useState([]);
   const [recentlyViewed, setRecentlyViewed] = useState([]);
 
-  // Get unique categories and technologies
-  const categories = useMemo(() => {
-    const cats = [...new Set(projects.map(project => project.category))];
-    return cats.sort();
+  // Separate projects into tiers FIRST
+  const professionalProjects = useMemo(() => {
+    return projects.filter(project => project.tier === 'professional');
   }, []);
+
+  const academicProjects = useMemo(() => {
+    return projects.filter(project => project.tier !== 'professional');
+  }, []);
+
+  // Get unique categories and technologies from ACADEMIC projects only
+  const categories = useMemo(() => {
+    const cats = [...new Set(academicProjects.map(project => project.category))];
+    return cats.sort();
+  }, [academicProjects]);
 
   const technologies = useMemo(() => {
-    const techs = [...new Set(projects.flatMap(project => project.technologies))];
+    const techs = [...new Set(academicProjects.flatMap(project => project.technologies))];
     return techs.sort();
-  }, []);
+  }, [academicProjects]);
 
-  // Derive year bounds from actual project data instead of hardcoding them.
-  // "Recent" quick filter searches for this exact year, so it stays tied to
-  // the latest actual project date. The date-range max is separate: it
-  // should track today's real year (not just the newest project) so the
-  // filter doesn't need a manual bump every year even before a new project
-  // is added.
-  const projectYears = useMemo(() => projects.map(project => parseInt(project.date, 10)), []);
+  // Derive year bounds from academic project data
+  const projectYears = useMemo(() => academicProjects.map(project => parseInt(project.date, 10)), [academicProjects]);
   const earliestYear = useMemo(() => Math.min(...projectYears), [projectYears]);
   const mostRecentYear = useMemo(() => Math.max(...projectYears), [projectYears]);
   const currentYear = new Date().getFullYear();
   const dateRangeMaxYear = Math.max(mostRecentYear, currentYear);
 
-  // Filter and sort projects
+  // Filter and sort ONLY academic projects
   const filteredProjects = useMemo(() => {
-    let filtered = projects.filter(project => {
+    let filtered = academicProjects.filter(project => {
       const matchesSearch = project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            project.technologies.some(tech => tech.toLowerCase().includes(searchTerm.toLowerCase()));
-      
+
       const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(project.category);
-      const matchesTechnology = selectedTechnologies.length === 0 || 
+      const matchesTechnology = selectedTechnologies.length === 0 ||
                                selectedTechnologies.some(tech => project.technologies.includes(tech));
-      
-      const matchesDateRange = (!dateRange.start || project.date >= dateRange.start) && 
+
+      const matchesDateRange = (!dateRange.start || project.date >= dateRange.start) &&
                               (!dateRange.end || project.date <= dateRange.end);
-      
+
       const matchesDifficulty = difficultyFilter.length === 0 || difficultyFilter.includes(project.difficulty);
-      
+
       return matchesSearch && matchesCategory && matchesTechnology && matchesDateRange && matchesDifficulty;
     });
 
@@ -85,7 +88,7 @@ const Projects = () => {
     });
 
     return filtered;
-  }, [searchTerm, selectedCategories, selectedTechnologies, sortBy, dateRange, difficultyFilter]);
+  }, [searchTerm, selectedCategories, selectedTechnologies, sortBy, dateRange, difficultyFilter, academicProjects]);
 
   const handleProjectClick = (project) => {
     setSelectedProject(project);
@@ -135,14 +138,14 @@ const Projects = () => {
     setDifficultyFilter([]);
   };
 
-  // Quick filter presets
+  // Quick filter presets (academic projects only)
   const quickFilters = [
-    { name: "All Projects", action: clearAllFilters, count: projects.length },
-    { name: "Web Apps", action: () => setSelectedCategories(["Web Application"]), count: projects.filter(p => p.category === "Web Application").length },
-    { name: "Games", action: () => setSelectedCategories(["Game"]), count: projects.filter(p => p.category === "Game").length },
-    { name: "Mobile Apps", action: () => setSelectedCategories(["Mobile Application"]), count: projects.filter(p => p.category === "Mobile Application").length },
-    { name: "React Projects", action: () => setSelectedTechnologies(["React"]), count: projects.filter(p => p.technologies.includes("React")).length },
-    { name: `Recent (${mostRecentYear})`, action: () => setSearchTerm(String(mostRecentYear)), count: projects.filter(p => p.date === String(mostRecentYear)).length },
+    { name: "All Projects", action: clearAllFilters, count: academicProjects.length },
+    { name: "Web Apps", action: () => setSelectedCategories(["Web Application"]), count: academicProjects.filter(p => p.category === "Web Application").length },
+    { name: "Games", action: () => setSelectedCategories(["Game"]), count: academicProjects.filter(p => p.category === "Game").length },
+    { name: "Mobile Apps", action: () => setSelectedCategories(["Mobile Application"]), count: academicProjects.filter(p => p.category === "Mobile Application").length },
+    { name: "React Projects", action: () => setSelectedTechnologies(["React"]), count: academicProjects.filter(p => p.technologies.includes("React")).length },
+    { name: `Recent (${mostRecentYear})`, action: () => setSearchTerm(String(mostRecentYear)), count: academicProjects.filter(p => p.date === String(mostRecentYear)).length },
   ];
 
 
@@ -151,8 +154,8 @@ const Projects = () => {
     <section className="max-container">
       <RevealOnScroll animation="fade-up">
         <h1 className="head-text">
-          My <span className="gradient-animate font-semibold drop-shadow">
-            Projects
+          Selected <span className="gradient-animate font-semibold drop-shadow">
+            Work
           </span>
         </h1>
       </RevealOnScroll>
@@ -163,7 +166,7 @@ const Projects = () => {
         </p>
       </div>
 
-      {/* Statistics Dashboard */}
+      {/* Statistics Dashboard - All Projects (Professional + Academic + Client) */}
       <RevealOnScroll animation="fade-up" delay={100}>
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="stat-card hover-glow bg-white rounded-xl p-6 shadow-lg border border-gray-100">
@@ -224,37 +227,123 @@ const Projects = () => {
           </div>
         </div>
       </div>
-      <GitHubStats />
       </RevealOnScroll>
 
-      {/* Technology Usage Chart */}
-      <RevealOnScroll animation="fade-up" delay={150}>
-      <div className="mt-8 bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover-glow">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Technology Usage</h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {technologies.slice(0, 8).map((tech) => {
-            const usageCount = projects.filter(p => p.technologies.includes(tech)).length;
-            const percentage = Math.round((usageCount / projects.length) * 100);
-            return (
-              <div key={tech} className="flex items-center gap-3">
-                <div className="flex-1">
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="font-medium text-gray-700">{tech}</span>
-                    <span className="text-gray-500">{usageCount}</span>
+      {/* TIER 1: Professional Projects */}
+      {professionalProjects.length > 0 && (
+        <div className="py-12">
+          <RevealOnScroll animation="fade-up">
+            <div className="mb-8">
+              <h2 className="subhead-text">Featured Professional Work</h2>
+              <p className={`mt-3 text-base max-w-2xl ${isDark ? 'text-gray-400' : 'text-slate-500'}`}>
+                Production applications engineered across 2.5+ years at WisdmLabs. Full-stack development, architecture, and deployment.
+              </p>
+            </div>
+          </RevealOnScroll>
+
+          <div className="flex flex-wrap gap-8">
+            {professionalProjects.map((project, index) => (
+              <RevealOnScroll key={project.id} animation="fade-up" delay={index * 80} className="lg:w-[400px] w-full">
+              <div
+                className="lg:w-full w-full cursor-pointer group cursor-target"
+                onClick={() => handleProjectClick(project)}
+              >
+                <div className={`project-card hover-glow rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden ${
+                  isDark
+                    ? 'bg-gray-800 border border-gray-700'
+                    : 'bg-white border border-gray-100'
+                }`}>
+                  {/* Project Header */}
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="block-container w-16 h-16">
+                  <div className={`btn-back rounded-xl ${project.theme}`} />
+                    <div className="btn-front rounded-xl flex justify-center items-center">
+                      {whiteIcons.includes(project.iconUrl) ? (
+                        <img
+                          src={project.iconUrl}
+                          alt="Project Icon"
+                          className="w-1/2 h-1/2 object-contain"
+                        />
+                      ) : (
+                        <div className="icon-chip w-1/2 h-1/2 p-1.5">
+                          <img
+                            src={project.iconUrl}
+                            alt="Project Icon"
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                      )}
+                    </div>
+                </div>
+                      <div className="flex gap-2">
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
+                          {project.status}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Project Info */}
+                    <div className="space-y-3">
+                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                        {project.name}
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        {project.description}
+                      </p>
+
+                      {/* Technologies with Icons */}
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies.slice(0, 4).map((tech, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium"
+                          >
+                            {project.technologyIcons && project.technologyIcons[index] && (
+                              <img
+                                src={project.technologyIcons[index]}
+                                alt={tech}
+                                className={`w-3 h-3 ${isDark && monochromeIcons.includes(project.technologyIcons[index]) ? 'invert' : ''}`}
+                              />
+                            )}
+                            {tech}
+                          </div>
+                        ))}
+                        {project.technologies.length > 4 && (
+                          <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">
+                            +{project.technologies.length - 4} more
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Project Meta */}
+                      <div className="flex items-center justify-between text-sm text-gray-500">
+                        <span>{project.category}</span>
+                        <span>{project.date}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
-                      className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${percentage}%` }}
-                    ></div>
+                  {/* Project Footer */}
+                  <div className={`px-6 py-4 border-t ${
+                    isDark
+                      ? 'bg-gray-700 border-gray-600'
+                      : 'bg-gray-50 border-gray-100'
+                  }`}>
+                                      <div className="flex items-center justify-between">
+                        <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{project.timeSpent}</span>
+                        <div className="flex items-center gap-2 text-blue-600 font-medium text-sm group-hover:text-blue-700 transition-colors">
+                          View Details
+                          <img src={arrow} alt="View details" className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
                   </div>
                 </div>
               </div>
-            );
-          })}
+              </RevealOnScroll>
+            ))}
+          </div>
         </div>
-      </div>
-      </RevealOnScroll>
+      )}
 
       {/* Recently Viewed Projects */}
       {recentlyViewed.length > 0 && (
@@ -325,6 +414,104 @@ const Projects = () => {
           ))}
         </div>
       </div>
+
+      {/* TIER 2: Client Work & Production Websites */}
+      <div className="py-12">
+        <RevealOnScroll animation="fade-up">
+          <div className="mb-8">
+            <h2 className="subhead-text">Client Work</h2>
+            <p className={`mt-3 text-base max-w-2xl ${isDark ? 'text-gray-400' : 'text-slate-500'}`}>
+              Production systems, data migrations, and custom applications engineered for enterprise clients. Engagements focused on payment token migrations, custom product architectures, geospatial portals, LMS automation, and production site reliability.
+            </p>
+          </div>
+        </RevealOnScroll>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {clientWork.map((client, index) => (
+            <RevealOnScroll key={client.id} animation="fade-up" delay={index * 60}>
+              <div className={`h-full rounded-xl p-6 border shadow-md hover:-translate-y-1 transition-all duration-300 ${
+                isDark ? 'bg-gray-800 border-gray-700 hover:border-blue-700' : 'bg-white border-gray-100 hover:border-blue-200'
+              }`}>
+                {/* Header */}
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <div>
+                    <h4 className={`font-bold text-lg leading-snug ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      {client.name}
+                    </h4>
+                    <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                        isDark ? 'bg-blue-900/60 text-blue-300' : 'bg-blue-100 text-blue-700'
+                      }`}>
+                        {client.category}
+                      </span>
+                      {client.timeline && (
+                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                          isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
+                        }`}>
+                          {client.timeline}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <a
+                    href={client.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit ${client.name} website`}
+                    className={`shrink-0 inline-flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg border transition-colors duration-200 ${
+                      isDark
+                        ? 'border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-400'
+                        : 'border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600'
+                    }`}
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    Live Site
+                  </a>
+                </div>
+
+                {/* Scope */}
+                <ul className="space-y-2 mb-4">
+                  {client.scope.map((point, i) => (
+                    <li key={i} className={`text-sm flex items-start gap-2.5 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" aria-hidden="true" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Technologies */}
+                <div className="flex flex-wrap gap-1.5">
+                  {client.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className={`text-xs px-2 py-0.5 rounded-full font-medium border ${
+                        isDark
+                          ? 'bg-gray-700 text-gray-300 border-gray-600'
+                          : 'bg-gray-50 text-gray-600 border-gray-200'
+                      }`}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </RevealOnScroll>
+          ))}
+        </div>
+      </div>
+
+      {/* TIER 3: Academic & Personal Projects with Search/Filter Controls */}
+      <div className="py-12">
+        <RevealOnScroll animation="fade-up">
+          <div className="mb-8">
+            <h2 className="subhead-text">Academic & Personal Projects</h2>
+            <p className={`mt-3 text-base max-w-2xl ${isDark ? 'text-gray-400' : 'text-slate-500'}`}>
+              Foundational projects, learning pursuits, and personal explorations in web development, mobile apps, games, and full-stack architecture.
+            </p>
+          </div>
+        </RevealOnScroll>
 
       {/* Search and Filters */}
       <div className="mt-8 space-y-4">
@@ -408,8 +595,8 @@ const Projects = () => {
                     )}
                     {categories.map(category => (
                       <label key={category} className={`flex items-center px-2 py-1 rounded-sm cursor-pointer ${
-                        isDark 
-                          ? 'hover:bg-gray-700' 
+                        isDark
+                          ? 'hover:bg-gray-700'
                           : 'hover:bg-gray-50'
                       }`}>
                         <input
@@ -423,7 +610,7 @@ const Projects = () => {
                         <span className={`text-sm ${
                           isDark ? 'text-gray-300' : 'text-gray-700'
                         }`}>
-                          {category} ({projects.filter(p => p.category === category).length})
+                          {category} ({academicProjects.filter(p => p.category === category).length})
                         </span>
                       </label>
                     ))}
@@ -488,8 +675,8 @@ const Projects = () => {
                     )}
                     {technologies.map(technology => (
                       <label key={technology} className={`flex items-center px-2 py-1 rounded-sm cursor-pointer ${
-                        isDark 
-                          ? 'hover:bg-gray-700' 
+                        isDark
+                          ? 'hover:bg-gray-700'
                           : 'hover:bg-gray-50'
                       }`}>
                         <input
@@ -503,7 +690,7 @@ const Projects = () => {
                         <span className={`text-sm ${
                           isDark ? 'text-gray-300' : 'text-gray-700'
                         }`}>
-                          {technology} ({projects.filter(p => p.technologies.includes(technology)).length})
+                          {technology} ({academicProjects.filter(p => p.technologies.includes(technology)).length})
                         </span>
                       </label>
                     ))}
@@ -740,7 +927,7 @@ const Projects = () => {
 
         {/* Results Count */}
         <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-          Showing {filteredProjects.length} of {projects.length} projects
+          Showing {filteredProjects.length} of {academicProjects.length} academic projects
         </div>
       </div>
 
@@ -781,9 +968,6 @@ const Projects = () => {
                 </div>
             </div>
                   <div className="flex gap-2">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(project.difficulty)}`}>
-                      {project.difficulty}
-                    </span>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
                       {project.status}
                     </span>
@@ -798,23 +982,6 @@ const Projects = () => {
                   <p className="text-gray-600 text-sm leading-relaxed">
                     {project.description}
                   </p>
-                  
-                  {/* Difficulty Level Indicator */}
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-gray-500">Complexity:</span>
-                    <div className="flex gap-1">
-                      {[1, 2, 3].map((level) => (
-                        <div
-                          key={level}
-                          className={`w-2 h-2 rounded-full ${
-                            level <= getDifficultyLevel(project.difficulty)
-                              ? 'bg-blue-500'
-                              : 'bg-gray-200'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </div>
                   
                   {/* Technologies with Icons */}
                   <div className="flex flex-wrap gap-2">
@@ -880,92 +1047,6 @@ const Projects = () => {
           </p>
         </div>
       )}
-
-      {/* Client Work & Production Websites */}
-      <div className="py-16">
-        <RevealOnScroll animation="fade-up">
-          <div className="mb-8">
-            <h3 className="subhead-text">Client Work</h3>
-            <p className={`mt-3 text-base max-w-2xl ${isDark ? 'text-gray-400' : 'text-slate-500'}`}>
-              Production systems, data migrations, and custom applications engineered for enterprise clients. Engagements focused on payment token migrations, custom product architectures, geospatial portals, LMS automation, and production site reliability.
-            </p>
-          </div>
-        </RevealOnScroll>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {clientWork.map((client, index) => (
-            <RevealOnScroll key={client.id} animation="fade-up" delay={index * 60}>
-              <div className={`h-full rounded-xl p-6 border shadow-md hover:-translate-y-1 transition-all duration-300 ${
-                isDark ? 'bg-gray-800 border-gray-700 hover:border-blue-700' : 'bg-white border-gray-100 hover:border-blue-200'
-              }`}>
-                {/* Header */}
-                <div className="flex items-start justify-between gap-3 mb-4">
-                  <div>
-                    <h4 className={`font-bold text-lg leading-snug ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                      {client.name}
-                    </h4>
-                    <div className="flex flex-wrap items-center gap-2 mt-1.5">
-                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                        isDark ? 'bg-blue-900/60 text-blue-300' : 'bg-blue-100 text-blue-700'
-                      }`}>
-                        {client.category}
-                      </span>
-                      {client.timeline && (
-                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                          isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
-                        }`}>
-                          {client.timeline}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <a
-                    href={client.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Visit ${client.name} website`}
-                    className={`shrink-0 inline-flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg border transition-colors duration-200 ${
-                      isDark
-                        ? 'border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-400'
-                        : 'border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600'
-                    }`}
-                  >
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                    Live Site
-                  </a>
-                </div>
-
-                {/* Scope */}
-                <ul className="space-y-2 mb-4">
-                  {client.scope.map((point, i) => (
-                    <li key={i} className={`text-sm flex items-start gap-2.5 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                      <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" aria-hidden="true" />
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-1.5">
-                  {client.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className={`text-xs px-2 py-0.5 rounded-full font-medium border ${
-                        isDark
-                          ? 'bg-gray-700 text-gray-300 border-gray-600'
-                          : 'bg-gray-50 text-gray-600 border-gray-200'
-                      }`}
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </RevealOnScroll>
-          ))}
-        </div>
       </div>
 
       <CTA />

@@ -274,7 +274,7 @@ export const experiences = [
         website: "https://wisdmlabs.com",
         technologies: ["WordPress", "PHP", "Java", "Python", "JavaScript", "React", "MySQL", "PostgreSQL", "LearnDash", "WooCommerce", "Playwright", "Cloudways", "Cloudflare", "Cursor", "Claude Code"],
         achievements: [
-            "Delivered multiple client projects (YSI-INET, 12MinPrep) with high satisfaction by translating requirements into scalable solutions",
+            "Delivered multiple client projects (YSI-INET, 12MinPrep) by translating requirements into working technical solutions",
             "Improved platform reliability and release stability using automated E2E testing with Playwright",
             "Built KnowVault, a WordPress RAG-based AI chatbot plugin with multi-LLM support and a LearnDash-aware extension that scopes answers to a learner's course access",
             "Optimized database performance using advanced SQL query improvements and indexing strategies",
@@ -282,15 +282,12 @@ export const experiences = [
             "Managed full deployment pipelines including hosting, security, CDN, and server configurations"
         ],
         points: [
-            "Collaborated directly with clients to gather requirements, architect solutions, and deliver scalable, high-performance web products.",
-            "Developed and customized WordPress themes and plugins, implementing responsive layouts, page designs, and visual UI improvements alongside backend functionality and site lifecycle management.",
-            "Built data processing, migration, and automation scripts with Python and shell, alongside API-driven backend integrations and custom Gutenberg React components.",
-            "Designed and optimized SQL databases (MySQL, PostgreSQL) by writing efficient queries, implementing schemas, and improving performance.",
-            "Handled cloud deployment and site management using Cloudways, Cloudflare, FTP, and CLI-based server operations.",
-            "Implemented end-to-end automated testing using Playwright to validate UI workflows and improve release stability.",
-            "Leveraged AI-assisted development tools (Cursor, Claude Code) for intelligent debugging, code optimization, and secure code review.",
-            "Translated business requirements into scalable technical implementations with clean, maintainable, and modular code architecture.",
-            "Managed multiple product deployments, performance enhancements, bug resolution, and production support."
+            "Developed and customized WordPress themes and plugins, building backend functionality, custom REST API endpoints, and responsive frontend interfaces.",
+            "Designed and optimized SQL database schemas and queries across MySQL and PostgreSQL for client platforms.",
+            "Built data processing, migration, and automation workflows with Python and shell scripts alongside API-driven integrations.",
+            "Implemented end-to-end automated testing using Playwright to validate critical UI workflows and release quality.",
+            "Managed cloud deployments, staging-to-production workflows, and server operations across Cloudways and Cloudflare CDN.",
+            "Applied AI-assisted engineering tools (Cursor, Claude Code) for debugging, performance optimization, and codebase navigation."
         ],
     },
     {
@@ -308,7 +305,7 @@ export const experiences = [
         achievements: [
             "Completed MSc in Computer Science with 79.75% (2022-2024)",
             "Completed BSc in Computer Science with 83.5% (2019-2022)",
-            "Built 8+ full-stack applications including MERN stack projects",
+            "Built multiple full-stack and application projects across web, mobile, desktop, and game development",
             "Created mobile applications for Android platform"
         ],
         points: [
@@ -359,29 +356,8 @@ export const socialLinks = [
 
 export const projects = [
     {
-        id: 'ai-chatbot',
-        iconUrl: chatbot,
-        theme: 'btn-back-pink',
-        name: 'KnowVault | RAG & Multi-LLM Chatbot',
-        description: 'WordPress plugin implementing an enterprise RAG pipeline with multi-LLM support, configurable knowledge bases, and LearnDash course-access scoping.',
-        longDescription: 'Built a RAG-based AI chatbot plugin with document ingestion, chunking, embeddings, retrieval, and reranking to provide responses grounded in the available knowledge base. Ingests and indexes content from WordPress posts, uploaded documents, and external URLs. Supports multiple LLM providers (OpenAI, Anthropic Claude, Google Gemini, Together AI) across configurable chatbot instances for different knowledge bases and use cases. Includes local vector storage within the database with Pinecone support for scaling. Implemented a companion LearnDash extension that restricts responses based on a learner\'s actual course enrollment, prompting enrollment when unowned content is queried, and providing contextual course and product recommendations. Load-tested the chatbot with 500 users, achieving approximately 5-12 second response times under the test load.',
-        technologies: ['WordPress', 'PHP', 'MySQL', 'RAG / NLP', 'LearnDash', 'REST APIs'],
-        technologyIcons: [wordpress, php, mysql, nlp, learndash, api],
-        category: 'AI / Automation',
-        difficulty: 'Advanced',
-        status: 'Completed',
-        date: '2025',
-        timeSpent: '12 months',
-        githubUrl: 'https://github.com/Mayesh-wisdm/AI-Chatbot-Extension',
-        liveUrl: null,
-        screenshots: [],
-        features: ['RAG Pipeline (Chunking, Embeddings, Retrieval, Reranking)', 'Multi-LLM Support (OpenAI, Claude, Gemini, Together AI)', 'Configurable Chatbot Instances & Knowledge Bases', 'LearnDash Course-Access Scoping', 'Local & Pinecone Vector Storage', '500-User Load Testing (5-12s response times)', 'Course & Product Recommendations'],
-        challenges: ['Scoping RAG retrieval to authenticated LearnDash course access rules', 'Balancing local vector search latency with Pinecone scalability', 'Normalizing provider API interfaces across OpenAI, Claude, Gemini, and Together AI'],
-        learnings: ['RAG Pipeline Implementation & Retrieval Tuning', 'Vector Search & Embeddings Integration', 'LearnDash Hook & Access Scoping', 'Multi-Provider LLM Integration'],
-        link: 'https://github.com/Mayesh-wisdm/AI-Chatbot-Extension',
-    },
-    {
         id: 'ysi-inet',
+        tier: 'professional',
         iconUrl: ysi,
         theme: 'btn-back-blue',
         name: 'YSI-INET (Research Web Platform)',
@@ -404,10 +380,11 @@ export const projects = [
     },
     {
         id: '12minprep',
+        tier: 'professional',
         iconUrl: twelveMinPrep,
         theme: 'btn-back-green',
         name: '12MinPrep (EdTech Learning Platform)',
-        description: 'EdTech learning platform delivering test preparation courses, featuring custom LearnDash functionality, AI quiz context integrations, and scheduled maintenance.',
+        description: 'EdTech learning platform delivering test preparation courses, featuring custom LearnDash functionality, AI quiz-context awareness, and scheduled maintenance.',
         longDescription: 'Maintained and developed learning platform functionality for an EdTech test preparation site over 2+ years. Enhanced the AI engine with quiz and page context awareness to support learner inquiries, integrated Brevo transactional email automation, and embedded Crisp live chat. Resolved complex LMS template override conflicts, optimized database queries for quiz data, and executed planned production updates within short maintenance windows (targeted around 30 minutes, kept under 1 hour including database backups) using Cloudways and Cloudflare.',
         technologies: ['PHP', 'MySQL', 'JavaScript', 'REST APIs', 'LearnDash', 'Cloudways', 'Cloudflare', 'WordPress'],
         technologyIcons: [php, mysql, javascript, api, learndash, cloudways, cloudflare, wordpress],
@@ -423,6 +400,29 @@ export const projects = [
         challenges: ['Passing active test and quiz context to the AI helper', 'Resolving template override conflicts across LMS updates', 'Minimizing maintenance downtime during database backup and upgrade cycles'],
         learnings: ['LMS Architecture & LearnDash Extension', 'Context-Aware AI Assistant Integration', 'Transactional Email Automation', 'Production Maintenance Planning & Database Backups'],
         link: 'https://12minprep.com/',
+    },
+    {
+        id: 'ai-chatbot',
+        tier: 'professional',
+        iconUrl: chatbot,
+        theme: 'btn-back-pink',
+        name: 'KnowVault | RAG & Multi-LLM Chatbot',
+        description: 'WordPress plugin implementing an enterprise RAG pipeline with multi-LLM support, configurable knowledge bases, and LearnDash course-access scoping.',
+        longDescription: 'Built a RAG-based AI chatbot plugin with document ingestion, chunking, embeddings, retrieval, and reranking to provide responses grounded in the available knowledge base. Ingests and indexes content from WordPress posts, uploaded documents, and external URLs. Supports multiple LLM providers (OpenAI, Anthropic Claude, Google Gemini, Together AI) across configurable chatbot instances for different knowledge bases and use cases. Includes local vector storage within the database with Pinecone support for scaling. Implemented a companion LearnDash extension that restricts responses based on a learner\'s actual course enrollment, prompting enrollment when unowned content is queried, and providing contextual course and product recommendations. Load-tested the chatbot with 500 users, achieving approximately 5-12 second response times under the test load.',
+        technologies: ['WordPress', 'PHP', 'MySQL', 'RAG / NLP', 'LearnDash', 'REST APIs'],
+        technologyIcons: [wordpress, php, mysql, nlp, learndash, api],
+        category: 'AI / Automation',
+        difficulty: 'Advanced',
+        status: 'Completed',
+        date: '2025',
+        timeSpent: '12 months',
+        githubUrl: 'https://github.com/Mayesh21/AI-Chatbot-Extension',
+        liveUrl: null,
+        screenshots: [],
+        features: ['RAG Pipeline (Chunking, Embeddings, Retrieval, Reranking)', 'Multi-LLM Support (OpenAI, Claude, Gemini, Together AI)', 'Configurable Chatbot Instances & Knowledge Bases', 'LearnDash Course-Access Scoping', 'Local & Pinecone Vector Storage', '500-User Load Testing (5-12s response times)', 'Course & Product Recommendations'],
+        challenges: ['Scoping RAG retrieval to authenticated LearnDash course access rules', 'Balancing local vector search latency with Pinecone scalability', 'Normalizing provider API interfaces across OpenAI, Claude, Gemini, and Together AI'],
+        learnings: ['RAG Pipeline Implementation & Retrieval Tuning', 'Vector Search & Embeddings Integration', 'LearnDash Hook & Access Scoping', 'Multi-Provider LLM Integration'],
+        link: 'https://github.com/Mayesh21/AI-Chatbot-Extension',
     },
     {
         id: 'expense-tracker',
@@ -509,7 +509,7 @@ export const projects = [
         screenshots: [physipal1, physipal2, physipal3, physipal4],
         features: ['Product Catalog', 'Shopping Cart', 'Order Management', 'Admin Panel', 'Order Checkout Flow'],
         challenges: ['E-commerce logic', 'Security compliance', 'Inventory management'],
-        learnings: ['PHP Development', 'E-commerce Systems', 'Payment Processing', 'Database Design'],
+        learnings: ['PHP Development', 'E-commerce Systems', 'Database Design'],
         link: 'https://github.com/Mayesh21/Physipal',
     },
     {
@@ -666,7 +666,7 @@ export const clientWork = [
         timeline: 'Ad-hoc / On-demand',
         category: 'Production Migration & E-Learning',
         scope: [
-            'Executed live production migration for order management pipelines with zero transactional loss.',
+            'Executed live production migration for order management pipelines with database reconciliation and validated data integrity across staging and production.',
             'Delivered SCORM e-learning content integrations and customized WooCommerce product templates.',
         ],
         technologies: ['PHP', 'WooCommerce', 'SCORM', 'MySQL', 'WordPress'],
