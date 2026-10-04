@@ -1,4 +1,4 @@
-import {
+﻿import {
     car,
     contact,
     css,
@@ -45,6 +45,9 @@ import {
     cloudflare,
     twelveMinPrep,
     ysi,
+    rag,
+    llm,
+    vector
 } from "../assets/icons";
 
 // Project screenshots
@@ -87,13 +90,13 @@ export const monochromeIcons = [mysql, learndash, chatbot, twelveMinPrep, github
 
 export const skills = [
     {
-        imageUrl: java,
-        name: "Java",
+        imageUrl: javascript,
+        name: "JavaScript",
         type: "Programming",
-        description: "Core Java & Android development",
-        usage: "Android applications, desktop tools, OOP architecture, and academic/side projects",
-        experience: "Academic / Projects",
-        projects: ["FileX", "Library Management System"]
+        description: "Full-stack web language",
+        usage: "Interactive features, REST API integration, WordPress customization, and modern ES6+ development",
+        experience: "3+ years",
+        projects: ["YSI-INET", "12MinPrep", "Portfolio"]
     },
     {
         imageUrl: python,
@@ -105,13 +108,13 @@ export const skills = [
         projects: ["SnapEdit", "Data Analytics"]
     },
     {
-        imageUrl: javascript,
-        name: "JavaScript",
+        imageUrl: java,
+        name: "Java",
         type: "Programming",
-        description: "Full-stack web language",
-        usage: "Interactive features, REST API integration, WordPress customization, and modern ES6+ development",
-        experience: "3+ years",
-        projects: ["YSI-INET", "12MinPrep", "Portfolio"]
+        description: "Core Java & Android development",
+        usage: "Android applications, desktop tools, OOP architecture, and academic/side projects",
+        experience: "Academic / Projects",
+        projects: ["FileX", "Library Management System"]
     },
     {
         imageUrl: php,
@@ -121,6 +124,24 @@ export const skills = [
         usage: "WordPress custom plugins & themes, backend logic, and database-driven web applications",
         experience: "2+ years",
         projects: ["YSI-INET", "12MinPrep", "AI Chatbot", "Physipal"]
+    },
+    {
+        imageUrl: api,
+        name: "REST APIs",
+        type: "Backend",
+        description: "API development & integration",
+        usage: "Building and consuming REST APIs, third-party integrations, and data exchange",
+        experience: "2+ years",
+        projects: ["AI Chatbot", "YSI-INET", "12MinPrep", "Expense Management"]
+    },
+    {
+        imageUrl: nodejs,
+        name: "Node.js",
+        type: "Backend",
+        description: "JavaScript runtime environment",
+        usage: "Backend services, custom APIs, build tools, and full-stack MERN applications",
+        experience: "1.5+ years",
+        projects: ["Expense Management System", "Portfolio"]
     },
     {
         imageUrl: mysql,
@@ -141,6 +162,60 @@ export const skills = [
         projects: ["Enterprise Platforms", "Backend Services"]
     },
     {
+        imageUrl: rag,
+        name: "RAG",
+        type: "AI / ML",
+        description: "Retrieval-Augmented Generation",
+        usage: "Document ingestion, intelligent chatbots, and context-aware multi-LLM retrieval pipelines",
+        experience: "1+ year",
+        projects: ["AI Chatbot", "KnowVault"]
+    },
+    {
+        imageUrl: llm,
+        name: "LLM APIs",
+        type: "AI / ML",
+        description: "Model integration",
+        usage: "Anthropic Claude, OpenAI, and Gemini API integration, prompt tuning, and system design",
+        experience: "1+ year",
+        projects: ["AI Chatbot", "12MinPrep"]
+    },
+    {
+        imageUrl: vector,
+        name: "Embeddings & Vector Search",
+        type: "AI / ML",
+        description: "Semantic search & vector DBs",
+        usage: "Pinecone, local vector storage, similarity search, and high-performance embedding pipelines",
+        experience: "1+ year",
+        projects: ["AI Chatbot", "KnowVault"]
+    },
+    {
+        imageUrl: react,
+        name: "React",
+        type: "Frontend",
+        description: "Modern UI development",
+        usage: "Component-based applications, custom Gutenberg editor components, state management, and responsive interfaces",
+        experience: "1.5+ years",
+        projects: ["Portfolio", "WordPress Custom Blocks", "Expense Management"]
+    },
+    {
+        imageUrl: html,
+        name: "HTML5",
+        type: "Frontend",
+        description: "Semantic markup",
+        usage: "Building responsive, accessible, well-structured web pages and email templates",
+        experience: "3+ years",
+        projects: ["All Web Projects"]
+    },
+    {
+        imageUrl: css,
+        name: "CSS3",
+        type: "Frontend",
+        description: "Styling & responsive design",
+        usage: "Responsive layouts, animations, Flexbox, Grid, and modern UI patterns",
+        experience: "3+ years",
+        projects: ["All Web Projects"]
+    },
+    {
         imageUrl: wordpress,
         name: "WordPress",
         type: "CMS",
@@ -156,7 +231,7 @@ export const skills = [
         description: "WordPress e-commerce",
         usage: "Custom plugin development, payment integration, product management, and store customization",
         experience: "2+ years",
-        projects: ["E-commerce Sites", "Custom WooCommerce Plugins"]
+        projects: ["E-commerce Sites", "Custom Plugins"]
     },
     {
         imageUrl: learndash,
@@ -166,42 +241,6 @@ export const skills = [
         usage: "Custom plugin development, course management, student progress tracking, and LMS customization",
         experience: "1+ year",
         projects: ["12MinPrep", "AI Chatbot", "Learning Platforms"]
-    },
-    {
-        imageUrl: react,
-        name: "React",
-        type: "Frontend",
-        description: "Modern UI & Gutenberg block development",
-        usage: "Component-based applications, custom Gutenberg editor components, state management, and responsive interfaces",
-        experience: "1.5+ years",
-        projects: ["Portfolio", "WordPress Custom Blocks", "Expense Management System"]
-    },
-    {
-        imageUrl: html,
-        name: "HTML5",
-        type: "Frontend",
-        description: "Semantic markup & accessibility",
-        usage: "Building responsive, accessible, well-structured web pages and email templates",
-        experience: "3+ years",
-        projects: ["All Web Projects"]
-    },
-    {
-        imageUrl: css,
-        name: "CSS3",
-        type: "Frontend",
-        description: "Styling & responsive design",
-        usage: "Responsive layouts, animations, Flexbox, Grid, and modern UI patterns",
-        experience: "3+ years",
-        projects: ["All Web Projects"]
-    },
-    {
-        imageUrl: api,
-        name: "REST APIs",
-        type: "Backend",
-        description: "API development & integration",
-        usage: "Building and consuming REST APIs, third-party integrations, and data exchange",
-        experience: "2+ years",
-        projects: ["AI Chatbot", "YSI-INET", "12MinPrep", "Expense Management"]
     },
     {
         imageUrl: playwright,
@@ -222,20 +261,11 @@ export const skills = [
         projects: ["All Projects"]
     },
     {
-        imageUrl: github,
-        name: "GitHub",
-        type: "DevOps",
-        description: "Code hosting & CI/CD",
-        usage: "Repository management, pull requests, issue tracking, and deployment pipelines",
-        experience: "3+ years",
-        projects: ["All Projects"]
-    },
-    {
         imageUrl: cloudways,
-        name: "Cloud & Deployment",
+        name: "Cloudways",
         type: "DevOps",
-        description: "Cloudways, cPanel",
-        usage: "Cloud deployment, server management, FTP/SFTP, and CLI operations",
+        description: "Managed cloud hosting",
+        usage: "Cloud deployment, server management, SFTP, and staging-to-production workflows",
         experience: "1+ year",
         projects: ["YSI-INET", "12MinPrep", "Client Sites"]
     },
@@ -252,11 +282,11 @@ export const skills = [
         imageUrl: android,
         name: "Android Dev",
         type: "Mobile",
-        description: "Mobile application development",
+        description: "Mobile apps",
         usage: "Android SDK, Java-based mobile apps, SQLite databases, and UI design",
         experience: "1+ year",
         projects: ["FileX"]
-    },
+    }
 ];
 
 

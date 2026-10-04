@@ -44,7 +44,10 @@ const About = () => {
       <RevealOnScroll animation="fade-up" delay={100}>
         <div className="mt-5 flex flex-col gap-3 text-slate-500">
           <p>
-          Computer Science postgraduate with 2.5+ years of professional experience as a Full Stack Software Engineer at WisdmLabs, specializing in scalable web systems, backend development, and cloud-based deployments. Practical experience across the full stack includes frontend implementation, responsive layouts, and visual UI work alongside backend and infrastructure responsibilities. Interested in building intelligent, high-performance applications and exploring modern AI/ML technologies.
+          Computer Science postgraduate with 2.5+ years of professional experience as a Full Stack Software Engineer, specializing in production web systems, backend development, databases, and cloud-based deployments. Experienced in building client-facing applications across WordPress, PHP, JavaScript, React, SQL, REST APIs, automated testing, and AI-enabled systems.
+          </p>
+          <p className="mt-3">
+          Currently interested in building intelligent, high-performance applications and developing further in AI/ML and software engineering.
           </p>
         </div>
       </RevealOnScroll>
@@ -145,7 +148,7 @@ const About = () => {
         </RevealOnScroll>
         <div className="mt-5 flex flex-col gap-3 text-slate-500">
           <p>
-          2.5+ years at WisdmLabs, delivering scalable web platforms, custom integrations, and enterprise application optimization for clients across education, events, and non-profit sectors. Here&apos;s my journey:
+          2.5+ years of experience at WisdmLabs, delivering scalable web platforms, custom integrations, and enterprise application solutions for clients across education, research, and non-profit sectors. Here&apos;s my journey:
           </p>
         </div>
         <div className="mt-12 flex">

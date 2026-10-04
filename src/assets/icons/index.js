@@ -48,6 +48,9 @@ import cloudways from './Cloudways.svg'
 import jetpack from './jetpack.svg'
 import cloudflare from './cloudflare.svg'
 import twelveMinPrep from './twelveMinPrep.svg'
+import rag from './rag.svg'
+import llm from './llm.svg'
+import vector from './vector.svg'
 
 export {
     css,
@@ -99,5 +102,8 @@ export {
     cloudways,
     jetpack,
     cloudflare,
-    twelveMinPrep
+    twelveMinPrep,
+    rag,
+    llm,
+    vector
 }
