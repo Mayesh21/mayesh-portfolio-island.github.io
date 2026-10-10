@@ -6,7 +6,7 @@ import ProjectModal from "../components/ProjectModal";
 import RevealOnScroll from "../components/RevealOnScroll";
 import AnimatedCounter from "../components/AnimatedCounter";
 import { useTheme } from "../contexts/ThemeContext";
-import { getDifficultyColor, getStatusColor, getDifficultyLevel } from "../utils/projectUtils";
+import { getStatusColor, getDifficultyLevel } from "../utils/projectUtils";
 
 const Projects = () => {
   const { isDark } = useTheme();
@@ -29,6 +29,16 @@ const Projects = () => {
   const academicProjects = useMemo(() => {
     return projects.filter(project => project.tier !== 'professional');
   }, []);
+
+  const allProjectSections = useMemo(() => [...projects, ...clientWork], []);
+
+  const allTechnologies = useMemo(() => {
+    return [...new Set(allProjectSections.flatMap(project => project.technologies))].sort();
+  }, [allProjectSections]);
+
+  const allCategories = useMemo(() => {
+    return [...new Set(allProjectSections.map(project => project.category))].sort();
+  }, [allProjectSections]);
 
   // Get unique categories and technologies from ACADEMIC projects only
   const categories = useMemo(() => {
@@ -85,12 +95,11 @@ const Projects = () => {
     filtered.sort((a, b) => {
       switch (sortBy) {
         case "date":
-          return new Date(b.date) - new Date(a.date);
+          return extractEndYear(b.date) - extractEndYear(a.date);
         case "name":
           return a.name.localeCompare(b.name);
         case "difficulty": {
-          const difficultyOrder = { "Beginner": 1, "Intermediate": 2, "Advanced": 3 };
-          return difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty];
+          return getDifficultyLevel(a.difficulty) - getDifficultyLevel(b.difficulty);
         }
         case "category":
           return a.category.localeCompare(b.category);
@@ -178,7 +187,7 @@ const Projects = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total Projects</p>
-              <p className="text-2xl font-bold text-gray-900"><AnimatedCounter end={projects.length} /></p>
+                <p className="text-2xl font-bold text-gray-900"><AnimatedCounter end={allProjectSections.length} /></p>
             </div>
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -192,8 +201,8 @@ const Projects = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Completed</p>
-              <p className="text-2xl font-bold text-green-600">
-                <AnimatedCounter end={projects.filter(p => p.status === 'Completed').length} />
+                <p className="text-2xl font-bold text-green-600">
+                 <AnimatedCounter end={projects.filter(p => p.status === 'Completed').length + clientWork.length} />
               </p>
             </div>
             <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -208,7 +217,7 @@ const Projects = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Technologies</p>
-              <p className="text-2xl font-bold text-purple-600"><AnimatedCounter end={technologies.length} /></p>
+                <p className="text-2xl font-bold text-purple-600"><AnimatedCounter end={allTechnologies.length} /></p>
             </div>
             <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -222,7 +231,7 @@ const Projects = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Categories</p>
-              <p className="text-2xl font-bold text-orange-600"><AnimatedCounter end={categories.length} /></p>
+                <p className="text-2xl font-bold text-orange-600"><AnimatedCounter end={allCategories.length} /></p>
             </div>
             <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -249,10 +258,19 @@ const Projects = () => {
           <div className="flex flex-wrap gap-8">
             {professionalProjects.map((project, index) => (
               <RevealOnScroll key={project.id} animation="fade-up" delay={index * 80} className="lg:w-[400px] w-full">
-              <div
-                className="lg:w-full w-full cursor-pointer group cursor-target"
-                onClick={() => handleProjectClick(project)}
-              >
+               <div
+                 className="lg:w-full w-full cursor-pointer group cursor-target"
+                 onClick={() => handleProjectClick(project)}
+                 onKeyDown={(event) => {
+                   if (event.key === "Enter" || event.key === " ") {
+                     event.preventDefault();
+                     handleProjectClick(project);
+                   }
+                 }}
+                 role="button"
+                 tabIndex={0}
+                 aria-label={`View details for ${project.name}`}
+               >
                 <div className={`project-card hover-glow rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden ${
                   isDark
                     ? 'bg-gray-800 border border-gray-700'
@@ -513,7 +531,7 @@ const Projects = () => {
                   : (isDark ? "text-white" : "text-gray-900")
                 }>
                   {selectedCategories.length === 0 
-                    ? `All Categories (${projects.length})` 
+                     ? `All Categories (${academicProjects.length})` 
                     : `${selectedCategories.length} selected`
                   }
                 </span>
@@ -656,11 +674,12 @@ const Projects = () => {
           </div>
 
           {/* Sort By */}
-          <div>
+             <div className="relative">
             <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Sort By</label>
             <div className="relative">
-              <button
-                onClick={() => setShowSortDropdown(!showSortDropdown)}
+               <button
+                 type="button"
+                 onClick={() => setShowSortDropdown(!showSortDropdown)}
                 className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-left flex items-center justify-between ${
                   isDark 
                     ? 'border-gray-600 bg-gray-800' 
@@ -844,9 +863,18 @@ const Projects = () => {
         {filteredProjects.map((project, index) => (
           <RevealOnScroll key={project.id} animation="fade-up" delay={index * 80} className="lg:w-[400px] w-full">
           <div
-            className="lg:w-full w-full cursor-pointer group cursor-target"
-            onClick={() => handleProjectClick(project)}
-          >
+             className="lg:w-full w-full cursor-pointer group cursor-target"
+             onClick={() => handleProjectClick(project)}
+             onKeyDown={(event) => {
+               if (event.key === "Enter" || event.key === " ") {
+                 event.preventDefault();
+                 handleProjectClick(project);
+               }
+             }}
+             role="button"
+             tabIndex={0}
+             aria-label={`View details for ${project.name}`}
+           >
             <div className={`project-card hover-glow rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden ${
               isDark 
                 ? 'bg-gray-800 border border-gray-700' 
@@ -967,12 +995,13 @@ const Projects = () => {
       />
 
       {/* Click outside to close dropdowns */}
-      {(showCategoryDropdown || showTechnologyDropdown) && (
+       {(showCategoryDropdown || showTechnologyDropdown || showSortDropdown) && (
         <div 
           className="fixed inset-0 z-0" 
           onClick={() => {
-            setShowCategoryDropdown(false);
-            setShowTechnologyDropdown(false);
+             setShowCategoryDropdown(false);
+             setShowTechnologyDropdown(false);
+             setShowSortDropdown(false);
           }}
         />
       )}

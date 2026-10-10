@@ -35,6 +35,13 @@ export default [
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },
+  {
+    files: ['src/contexts/ThemeContext.jsx'],
+    rules: {
+      // This context intentionally exports both its provider and hook.
+      'react-refresh/only-export-components': 'off',
+    },
+  },
   // Vitest test files and setup
   {
     files: ['**/*.test.{js,jsx}', '**/*.spec.{js,jsx}', '**/tests/**/*.{js,jsx}', 'src/test/setup.js'],
